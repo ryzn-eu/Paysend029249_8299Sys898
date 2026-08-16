@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verifica di Sicurezza - S. Brotto (Holding)</title>
+    <style>
+        :root {
+            --primary: #cda434; /* Oro elegante */
+            --bg-color: #f4f6f8; /* Sfondo pagina grigio chiarissimo */
+            --card-bg: #ffffff; /* Sfondo modulo bianco puro */
+            --text-main: #2d3748; /* Testo principale scuro */
+            --text-muted: #718096; /* Testo secondario */
+            --border-color: #e2e8f0; /* Colore bordi leggeri */
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .verification-card {
+            background-color: var(--card-bg);
+            padding: 3rem 2.5rem;
+            border-radius: 16px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+            width: 100%;
+            max-width: 380px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: slideUpFade 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+        }
+
+        @keyframes slideUpFade {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .logo-container {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .logo-img {
+            max-width: 100%;
+            height: auto;
+            max-height: 90px;
+            object-fit: contain;
+            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.05));
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 0.85rem;
+            background-color: #f8fafc;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-main);
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        .input-group input::placeholder {
+            color: #a0aec0;
+        }
+
+        .input-group input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(205, 164, 52, 0.15);
+            background-color: #ffffff;
+        }
+
+        .verify-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, #cda434 0%, #b8860b 100%);
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s, background 0.3s;
+            margin-top: 1rem;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+        }
+
+        .verify-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(205, 164, 52, 0.3);
+        }
+
+        .verify-btn:active {
+            transform: translateY(0);
+        }
+
+        .message {
+            margin-top: 1.5rem;
+            text-align: center;
+            font-size: 0.9rem;
+            padding: 0.75rem;
+            border-radius: 8px;
+            display: none;
+            animation: fadeIn 0.5s ease;
+            font-weight: 500;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .message.error {
+            background-color: #fef2f2;
+            color: #ef4444;
+            border: 1px solid #fecaca;
+        }
+
+        .message.success {
+            background-color: #f0fdf4;
+            color: #16a34a;
+            border: 1px solid #bbf7d0;
+        }
+
+        .copyright {
+            margin-top: 2.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            letter-spacing: 0.5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="verification-card">
+        <div class="logo-container">
+            <img src="https://raw.githubusercontent.com/ryzn-eu/Paysend029249_8299Sys898/main/18C8FB52-5C10-4353-816A-8F05575A14DD.png" alt="Logo S. Brotto Holding" class="logo-img">
+        </div>
+
+        <form id="verificationForm" onsubmit="handleVerify(event)">
+            <div class="input-group">
+                <label for="cf">Codice Fiscale</label>
+                <input type="text" id="cf" placeholder="Inserisci Codice Fiscale" required autocomplete="off">
+            </div>
+
+            <div class="input-group">
+                <label for="dob">Data di Nascita</label>
+                <input type="text" id="dob" placeholder="GG/MM/AAAA" required autocomplete="off">
+            </div>
+
+            <div class="input-group">
+                <label for="payment">Codice Verifica Pagamento</label>
+                <input type="text" id="payment" placeholder="Inserisci codice" required autocomplete="off">
+            </div>
+
+            <button type="submit" class="verify-btn">Verifica Identità</button>
+            
+            <div id="statusMessage" class="message"></div>
+        </form>
+
+        <div class="copyright">
+            &copy; 2026 S.B. Global Horizon S.A.<br>
+            AuraBank S.p.a. E S.Brotto Holding
+        </div>
+    </div>
+
+    <script>
+        function handleVerify(event) {
+            event.preventDefault();
+
+            const cf = document.getElementById('cf').value.trim().toUpperCase();
+            const dob = document.getElementById('dob').value.trim();
+            const payment = document.getElementById('payment').value.trim();
+            const statusMessage = document.getElementById('statusMessage');
+
+            // Dati esatti richiesti per la verifica
+            const systemCF = "RSONLT78R59Z129Y";
+            const systemDOB = "19/10/1978";
+            const systemPayment = "4701981336";
+
+            statusMessage.style.display = 'block';
+
+            if (cf === systemCF && dob === systemDOB && payment === systemPayment) {
+                // Successo
+                statusMessage.className = 'message success';
+                statusMessage.textContent = 'Autenticazione riuscita. Accesso autorizzato.';
+                
+                // Effetto bottone
+                const btn = document.querySelector('.verify-btn');
+                btn.style.background = '#16a34a'; // Verde per confermare il successo
+                btn.style.boxShadow = '0 8px 20px rgba(22, 163, 74, 0.3)';
+                btn.textContent = 'VERIFICATO';
+            } else {
+                // Errore
+                statusMessage.className = 'message error';
+                statusMessage.textContent = 'Credenziali non valide. Verifica i dati inseriti.';
+            }
+        }
+    </script>
+</body>
+</html>
