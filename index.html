@@ -2,235 +2,607 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Verifica di Sicurezza - S. Brotto (Holding)</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>S.Holding | Sviluppiamo soluzioni per il domani</title>
     <style>
+        /* CSS Reset & Variabili Stile Moderno/3D */
         :root {
-            --primary: #cda434; /* Oro elegante */
-            --bg-color: #f4f6f8; /* Sfondo pagina grigio chiarissimo */
-            --card-bg: #ffffff; /* Sfondo modulo bianco puro */
-            --text-main: #2d3748; /* Testo principale scuro */
-            --text-muted: #718096; /* Testo secondario */
-            --border-color: #e2e8f0; /* Colore bordi leggeri */
+            --bg-color: #f8f9fa;
+            --bg-secondary: #ffffff;
+            --text-main: #1d1d1f;
+            --text-muted: #6e6e73;
+            --accent-blue: #0066cc;
+            --accent-hover: #004499;
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.5);
+            --font-stack: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
         body {
-            font-family: 'Helvetica Neue', Arial, sans-serif;
+            font-family: var(--font-stack);
             background-color: var(--bg-color);
             color: var(--text-main);
+            line-height: 1.5;
+            font-weight: 400;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(0, 102, 204, 0.08) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(0, 102, 204, 0.05) 0px, transparent 50%);
+            background-attachment: fixed;
+        }
+
+        /* Navigazione - Fix Mobile Scrolling */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: saturate(180%) blur(20px);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            z-index: 9999;
+            /* Forza l'accelerazione hardware per evitare saltellamenti su mobile */
+            transform: translateZ(0);
+            -webkit-transform: translateZ(0);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            height: 100%;
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
-            height: 100vh;
-            margin: 0;
-            overflow: hidden;
+            padding: 0 20px;
         }
 
-        .verification-card {
-            background-color: var(--card-bg);
-            padding: 3rem 2.5rem;
-            border-radius: 16px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
-            width: 100%;
-            max-width: 380px;
-            opacity: 0;
-            transform: translateY(30px);
-            animation: slideUpFade 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            border: 1px solid var(--border-color);
+        .nav-brand {
             display: flex;
-            flex-direction: column;
-        }
-
-        @keyframes slideUpFade {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .logo-container {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .logo-img {
-            max-width: 100%;
-            height: auto;
-            max-height: 90px;
-            object-fit: contain;
-            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.05));
-        }
-
-        .input-group {
-            margin-bottom: 1.5rem;
-            position: relative;
-        }
-
-        .input-group label {
-            display: block;
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            margin-bottom: 0.5rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-weight: 600;
-        }
-
-        .input-group input {
-            width: 100%;
-            padding: 0.85rem;
-            background-color: #f8fafc;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
             color: var(--text-main);
-            font-size: 1rem;
-            outline: none;
-            transition: all 0.3s ease;
-            box-sizing: border-box;
+            font-weight: 700;
+            font-size: 18px;
+            letter-spacing: -0.01em;
         }
 
-        .input-group input::placeholder {
-            color: #a0aec0;
+        /* LOGO: Inserisci il nome del file immagine alla fine di questo URL */
+        .nav-logo {
+            height: 32px;
+            width: auto;
+            object-fit: contain;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
         }
 
-        .input-group input:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(205, 164, 52, 0.15);
-            background-color: #ffffff;
+        .nav-links {
+            display: flex;
+            gap: 35px;
+            list-style: none;
         }
 
-        .verify-btn {
-            width: 100%;
-            padding: 1rem;
-            background: linear-gradient(135deg, #cda434 0%, #b8860b 100%);
-            color: #ffffff;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s, background 0.3s;
-            margin-top: 1rem;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+        .nav-links li a {
+            text-decoration: none;
+            color: var(--text-main);
+            font-size: 13px;
+            font-weight: 500;
+            opacity: 0.7;
+            transition: opacity 0.3s, transform 0.3s;
         }
 
-        .verify-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(205, 164, 52, 0.3);
+        .nav-links li a:hover {
+            opacity: 1;
+            transform: translateY(-1px);
         }
 
-        .verify-btn:active {
+        /* Sezioni Comuni */
+        section {
+            padding: 140px 20px 80px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 52px;
+            font-weight: 700;
+            line-height: 1.1;
+            letter-spacing: -0.01em;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, #1d1d1f 0%, #434345 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 22px;
+            color: var(--text-muted);
+            margin-bottom: 80px;
+            max-width: 750px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Animazioni Scroll */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
             transform: translateY(0);
         }
 
-        .message {
-            margin-top: 1.5rem;
+        /* Hero Section */
+        .hero {
+            padding-top: 200px;
+            padding-bottom: 120px;
             text-align: center;
-            font-size: 0.9rem;
-            padding: 0.75rem;
-            border-radius: 8px;
-            display: none;
-            animation: fadeIn 0.5s ease;
-            font-weight: 500;
+            max-width: 100%;
+            position: relative;
+            overflow: hidden;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        /* Elemento 3D Astratto Sfondo Hero */
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -10%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80vw;
+            height: 80vw;
+            background: radial-gradient(circle, rgba(0,102,204,0.15) 0%, rgba(255,255,255,0) 70%);
+            z-index: -1;
+            border-radius: 50%;
         }
 
-        .message.error {
-            background-color: #fef2f2;
-            color: #ef4444;
-            border: 1px solid #fecaca;
+        .hero h1 {
+            font-size: 72px;
+            line-height: 1.05;
+            font-weight: 800;
+            letter-spacing: -0.015em;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #1d1d1f 0%, #0066cc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        .message.success {
-            background-color: #f0fdf4;
-            color: #16a34a;
-            border: 1px solid #bbf7d0;
-        }
-
-        .copyright {
-            margin-top: 2.5rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid var(--border-color);
-            text-align: center;
-            font-size: 0.7rem;
+        .hero h2 {
+            font-size: 26px;
+            font-weight: 400;
             color: var(--text-muted);
+            margin-bottom: 50px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--accent-blue) 0%, #005bb5 100%);
+            color: white;
+            padding: 16px 36px;
+            border-radius: 980px;
+            text-decoration: none;
+            font-size: 17px;
+            font-weight: 600;
+            box-shadow: 0 10px 20px rgba(0, 102, 204, 0.3);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(0, 102, 204, 0.4);
+        }
+
+        /* Grid Divisioni (3D Cards) */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            perspective: 1000px;
+        }
+
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 28px;
+            padding: 40px;
+            text-align: left;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.04), inset 0 0 0 1px rgba(255,255,255,0.5);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            transform-style: preserve-3d;
+        }
+
+        .card:hover {
+            transform: translateY(-12px) rotateX(2deg) rotateY(-2deg);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.08), 0 15px 20px rgba(0, 102, 204, 0.1);
+            background: rgba(255,255,255,0.9);
+        }
+
+        .card-icon {
+            font-size: 48px;
+            margin-bottom: 25px;
+            display: inline-block;
+            transform: translateZ(20px); /* Effetto profondità */
+        }
+
+        .card h3 {
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            transform: translateZ(10px);
+        }
+
+        .card p {
+            font-size: 17px;
+            color: var(--text-muted);
+            margin-bottom: 25px;
+            transform: translateZ(5px);
+        }
+
+        .sub-divisions {
+            margin-top: 20px;
+            font-size: 15px;
+            color: var(--text-main);
+            transform: translateZ(10px);
+        }
+        
+        .sub-divisions li {
+            margin-bottom: 12px;
+            list-style-type: none;
+            position: relative;
+            padding-left: 24px;
+            line-height: 1.4;
+        }
+        
+        .sub-divisions li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--accent-blue);
+            font-weight: bold;
+        }
+
+        /* Full Width Image Section (Sostenibilità) */
+        .feature-split {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 32px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.06);
+            overflow: hidden;
+            margin-top: 40px;
+            transition: transform 0.4s;
+        }
+        
+        .feature-split:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-text {
+            flex: 1;
+            padding: 80px 60px;
+        }
+
+        .feature-text h3 {
+            font-size: 44px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            line-height: 1.1;
+        }
+
+        .feature-text p {
+            font-size: 19px;
+            color: var(--text-muted);
+            margin-bottom: 24px;
             line-height: 1.6;
-            letter-spacing: 0.5px;
+        }
+
+        .feature-image {
+            flex: 1;
+            min-height: 600px;
+            /* Immagine 3D/Moderna */
+            background: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=1200') center/cover;
+        }
+
+        /* Blog Section */
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .blog-card {
+            background-color: #fff;
+            border: 1px solid rgba(0,0,0,0.05);
+            border-radius: 24px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.03);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        .blog-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .blog-img {
+            height: 220px;
+            background-color: var(--bg-secondary);
+            background-position: center;
+            background-size: cover;
+            transition: transform 0.5s;
+        }
+
+        .blog-card:hover .blog-img {
+            transform: scale(1.05);
+        }
+        
+        .blog-img-wrapper {
+            overflow: hidden;
+        }
+
+        .blog-content {
+            padding: 35px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: #fff;
+            position: relative;
+            z-index: 2;
+        }
+
+        .blog-date {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--accent-blue);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 12px;
+        }
+
+        .blog-content h4 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            line-height: 1.3;
+        }
+
+        .blog-content p {
+            font-size: 16px;
+            color: var(--text-muted);
+            margin-bottom: 25px;
+            flex: 1;
+        }
+
+        .blog-link {
+            color: var(--text-main);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: color 0.2s;
+        }
+        
+        .blog-link:hover {
+            color: var(--accent-blue);
+        }
+
+        /* Footer */
+        footer {
+            background-color: #1d1d1f;
+            color: #f5f5f7;
+            padding: 80px 20px;
+            text-align: center;
+            font-size: 14px;
+        }
+        footer p { margin-bottom: 12px; opacity: 0.8; }
+        footer a { color: #fff; text-decoration: none; font-weight: 600; }
+        footer a:hover { text-decoration: underline; color: var(--accent-blue); }
+
+        @media (max-width: 900px) {
+            .blog-grid { grid-template-columns: 1fr; }
+            .feature-split { flex-direction: column; }
+            .feature-image { width: 100%; min-height: 350px; }
+            .nav-links { display: none; }
+            .hero h1 { font-size: 48px; }
+            section { padding: 100px 20px 40px; }
         }
     </style>
 </head>
 <body>
 
-    <div class="verification-card">
-        <div class="logo-container">
-            <img src="https://raw.githubusercontent.com/ryzn-eu/Paysend029249_8299Sys898/main/18C8FB52-5C10-4353-816A-8F05575A14DD.png" alt="Logo S. Brotto Holding" class="logo-img">
+    <!-- Navigazione -->
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="nav-brand">
+                <!-- INSERISCI QUI IL NOME DEL FILE LOGO AL POSTO DI TUO_LOGO.png -->
+                <img src="https://raw.githubusercontent.com/ryzn-eu/Paysend029249_8299Sys898/main/TUO_LOGO.png" alt="S.Holding Logo" class="nav-logo">
+                S.Holding
+            </a>
+            <ul class="nav-links">
+                <li><a href="#about">Chi Siamo</a></li>
+                <li><a href="#divisions">Divisioni</a></li>
+                <li><a href="#sustainability">Sostenibilità</a></li>
+                <li><a href="#blog">Blog & News</a></li>
+            </ul>
         </div>
+    </nav>
 
-        <form id="verificationForm" onsubmit="handleVerify(event)">
-            <div class="input-group">
-                <label for="cf">Codice Fiscale</label>
-                <input type="text" id="cf" placeholder="Inserisci Codice Fiscale" required autocomplete="off">
-            </div>
-
-            <div class="input-group">
-                <label for="dob">Data di Nascita</label>
-                <input type="text" id="dob" placeholder="GG/MM/AAAA" required autocomplete="off">
-            </div>
-
-            <div class="input-group">
-                <label for="payment">Codice Verifica Pagamento</label>
-                <input type="text" id="payment" placeholder="Inserisci codice" required autocomplete="off">
-            </div>
-
-            <button type="submit" class="verify-btn">Verifica Identità</button>
-            
-            <div id="statusMessage" class="message"></div>
-        </form>
-
-        <div class="copyright">
-            &copy; 2026 S.B. Global Horizon S.A.<br>
-            AuraBank S.p.a. E S.Brotto Holding
+    <!-- Hero Section -->
+    <header class="hero">
+        <div class="fade-in">
+            <h1>Sviluppiamo soluzioni<br>pratiche per il domani.</h1>
+            <h2>La holding direzionale che guida l'ecosistema globale S.B. Global Horizon.</h2>
+            <a href="#divisions" class="btn">Esplora l'Ecosistema</a>
         </div>
-    </div>
+    </header>
 
+    <!-- Chi Siamo -->
+    <section id="about" class="fade-in">
+        <h2 class="section-title">La nostra Visione</h2>
+        <p class="section-subtitle">Operiamo trasversalmente nei settori delle infrastrutture, delle telecomunicazioni, dello sviluppo software e dell'intrattenimento multimediale. Non cerchiamo l'espansione rapida a tutti i costi, ma mettiamo al primo posto l'affidabilità delle reti, la sostenibilità e l'impatto positivo sulle comunità che serviamo.</p>
+    </section>
+
+    <!-- Divisioni -->
+    <section id="divisions" class="fade-in">
+        <h2 class="section-title">Ecosistema Horizon</h2>
+        <p class="section-subtitle">Dipartimenti altamente specializzati, creati per garantire eccellenza e innovazione.</p>
+        
+        <div class="grid">
+            <!-- Card 1 -->
+            <div class="card">
+                <div class="card-icon">⚡</div>
+                <h3>Energia & Telecom</h3>
+                <p>Reti resilienti e connettività di nuova generazione.</p>
+                <ul class="sub-divisions">
+                    <li><strong>IREO:</strong> Gestione sostenibile, energia rinnovabile e purificazione acque.</li>
+                    <li><strong>Net-Orion:</strong> Hardware fisico, reti in fibra e data center globali.</li>
+                    <li><strong>Orion AI:</strong> Connettività estrema FWA e IA applicata alle telecomunicazioni.</li>
+                </ul>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="card">
+                <div class="card-icon">💻</div>
+                <h3>Software & Servizi B2B</h3>
+                <p>Infrastrutture digitali e piattaforme intelligenti.</p>
+                <ul class="sub-divisions">
+                    <li><strong>Dev.Ryzn:</strong> Sviluppo di sistemi operativi, software ERP e strumenti di IA.</li>
+                    <li><strong>Horizon Services Italy:</strong> Soluzioni B2B, telecomunicazioni sicure e IT dedicato alle PMI italiane.</li>
+                </ul>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="card">
+                <div class="card-icon">🎬</div>
+                <h3>Media & Creatività</h3>
+                <p>Ridefiniamo l'intrattenimento e lo storytelling.</p>
+                <ul class="sub-divisions">
+                    <li><strong>Aura Ecosystem & Ryzn Music:</strong> Piattaforme musicali ed etichetta digitale indipendente.</li>
+                    <li><strong>Aura TV:</strong> Broadcasting e streaming video in alta definizione.</li>
+                    <li><strong>MoonLight Production:</strong> Produzione cinematografica (<em>The Island</em>, <em>Project: ORION</em>).</li>
+                </ul>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="card">
+                <div class="card-icon">📚</div>
+                <h3>Formazione Avanzata</h3>
+                <p>Sviluppiamo il talento di domani, oggi.</p>
+                <ul class="sub-divisions">
+                    <li><strong>HC Institute:</strong> L'accademia aziendale dedicata all'alta formazione tecnologica e allo sviluppo manageriale.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sostenibilità -->
+    <section id="sustainability" class="fade-in">
+        <h2 class="section-title">Integrazione Urbana</h2>
+        <p class="section-subtitle">Crediamo nella tecnologia al servizio del cittadino per creare spazi urbani più puliti e accessibili.</p>
+        
+        <div class="feature-split">
+            <div class="feature-text">
+                <h3>Città intelligenti,<br>a misura d'uomo.</h3>
+                <p>I nostri progetti di sviluppo urbano integrano <strong>trasporti efficienti</strong> basati su energie rinnovabili, abbattendo l'inquinamento acustico ed atmosferico.</p>
+                <p>Sviluppiamo <strong>sistemi di irrigazione intelligenti</strong> per l'ottimizzazione dell'acqua nei parchi e <strong>illuminazione adattiva</strong> che regola l'intensità in base alla presenza dei pedoni, garantendo sicurezza e un drastico risparmio energetico.</p>
+            </div>
+            <div class="feature-image"></div>
+        </div>
+    </section>
+
+    <!-- Blog & Novità -->
+    <section id="blog" class="fade-in">
+        <h2 class="section-title">Articoli & Novità</h2>
+        <p class="section-subtitle">Resta aggiornato sugli sviluppi dell'Ecosistema S.B. Global Horizon.</p>
+
+        <div class="blog-grid">
+            <!-- Articolo 1 -->
+            <div class="blog-card">
+                <div class="blog-img-wrapper">
+                    <!-- Immagine Tech 3D Astratta -->
+                    <div class="blog-img" style="background-image: url('https://images.unsplash.com/photo-1634152962476-4b8a00e1915c?auto=format&fit=crop&q=80&w=800');"></div>
+                </div>
+                <div class="blog-content">
+                    <div class="blog-date">Roadmap 2027</div>
+                    <h4>Espansione USA: Nuova sede operativa a Las Vegas</h4>
+                    <p>La nostra presenza si rafforza. Annunciata l'apertura del nuovo hub strategico, prevista per il 15 Febbraio 2027, che ospiterà Orion AI e MoonLight Production.</p>
+                    <a href="#" class="blog-link">Leggi l'articolo &rarr;</a>
+                </div>
+            </div>
+            <!-- Articolo 2 -->
+            <div class="blog-card">
+                <div class="blog-img-wrapper">
+                    <div class="blog-img" style="background-image: url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&q=80&w=800');"></div>
+                </div>
+                <div class="blog-content">
+                    <div class="blog-date">Tecnologia (Dev.Ryzn)</div>
+                    <h4>Nuova release del sistema ERP per PMI Italiane</h4>
+                    <p>Horizon Services Italy presenta in collaborazione con Dev.Ryzn la nuova suite gestionale integrata con intelligenza artificiale per l'ottimizzazione industriale.</p>
+                    <a href="#" class="blog-link">Scopri i dettagli &rarr;</a>
+                </div>
+            </div>
+            <!-- Articolo 3 -->
+            <div class="blog-card">
+                <div class="blog-img-wrapper">
+                    <div class="blog-img" style="background-image: url('https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?auto=format&fit=crop&q=80&w=800');"></div>
+                </div>
+                <div class="blog-content">
+                    <div class="blog-date">Media & Cinema</div>
+                    <h4>MoonLight Production svela i concept di "The Island"</h4>
+                    <p>La divisione creativa entra in pre-produzione per i nuovi titoli. "The Island" e "Project: ORION" promettono di rivoluzionare lo storytelling su Aura TV.</p>
+                    <a href="#" class="blog-link">Guarda le anteprime &rarr;</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p><strong>S.HOLDING | Controllante di S.B. GLOBAL HORIZON</strong></p>
+        <p>📍 Headquarter: Via Domnul Ocesti 4, Stanesti, Giurgiu (RO)</p>
+        <p>Network Global: <a href="http://wd-globalhorizon.com" target="_blank">wd-globalhorizon.com</a> | Network IT: <a href="http://servizihorizon.it" target="_blank">servizihorizon.it</a></p>
+        <p style="margin-top: 20px; color: #a1a1a6; font-size: 12px;">&copy; 2026 S.Holding. Tutti i diritti riservati.</p>
+    </footer>
+
+    <!-- Script per le animazioni -->
     <script>
-        function handleVerify(event) {
-            event.preventDefault();
+        document.addEventListener('DOMContentLoaded', () => {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
 
-            const cf = document.getElementById('cf').value.trim().toUpperCase();
-            const dob = document.getElementById('dob').value.trim();
-            const payment = document.getElementById('payment').value.trim();
-            const statusMessage = document.getElementById('statusMessage');
-
-            // Dati esatti richiesti per la verifica
-            const systemCF = "RSONLT78R59Z129Y";
-            const systemDOB = "19/10/1978";
-            const systemPayment = "4701981336";
-
-            statusMessage.style.display = 'block';
-
-            if (cf === systemCF && dob === systemDOB && payment === systemPayment) {
-                // Successo
-                statusMessage.className = 'message success';
-                statusMessage.textContent = 'Autenticazione riuscita. Accesso autorizzato.';
-                
-                // Effetto bottone
-                const btn = document.querySelector('.verify-btn');
-                btn.style.background = '#16a34a'; // Verde per confermare il successo
-                btn.style.boxShadow = '0 8px 20px rgba(22, 163, 74, 0.3)';
-                btn.textContent = 'VERIFICATO';
-            } else {
-                // Errore
-                statusMessage.className = 'message error';
-                statusMessage.textContent = 'Credenziali non valide. Verifica i dati inseriti.';
-            }
-        }
+            document.querySelectorAll('.fade-in').forEach((element) => {
+                observer.observe(element);
+            });
+        });
     </script>
 </body>
 </html>
