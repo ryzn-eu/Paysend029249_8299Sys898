@@ -64,7 +64,7 @@ const $=s=>document.querySelector(s),LS={g:(k,d)=>{try{return JSON.parse(localSt
 const AURA='PL-s-2iEQcaPDhcrse4nbSmardHrlWUQdp'; /* playlist "Aura Sound" letta dall'app originale */
 const P={play:'M8 5v14l11-7z',pause:'M6 19h4V5H6zm8-14v14h4V5z',next:'M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z',prev:'M6 6h2v12H6zm3.5 6l8.5 6V6z',shuf:'M10.6 9.2 5.4 4 4 5.4l5.2 5.2zM14.5 4l2 2L4 18.6 5.4 20 18 7.5l2 2V4zm.3 9.4-1.4 1.4 3.1 3.1-2 2H20v-5.5l-2 2z',srch:'M15.5 14h-.8l-.3-.3A6.5 6.5 0 1 0 14 15.5l.3.3v.8l5 5 1.5-1.5zm-6 0a4.5 4.5 0 1 1 0-9 4.5 4.5 0 0 1 0 9z',down:'M7.4 8.6 12 13.2l4.6-4.6L18 10l-6 6-6-6z',que:'M3 13h12v-2H3zm0-4h12V7H3zm0 8h8v-2H3zm13-6v7.5a2.5 2.5 0 1 0 2 2.4V11h3V9h-5z',loop:'M7 7h10v3l4-4-4-4v3H5v6h2zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2z',more:'M6 10a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm12 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-6 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4z',heart:'M12 21l-1.5-1.3C5.4 15.4 2 12.3 2 8.5A4.5 4.5 0 0 1 6.5 4c1.7 0 3.4.8 4.5 2.1A6 6 0 0 1 15.500 4 4.500 4.500 0 0 1 20 8.500c0 3.800-3.400 6.900-8.500 11.200z'};
 const I=(k,f)=>`<svg viewBox="0 0 24 24"${f?` style="fill:${f}"`:''}><path d="${P[k]}"/></svg>`;
-let meta=LS.g('meta',{}),ids=LS.g('ids',[]),extra=LS.g('extra',[]),fav=LS.g('fav',[]),hist=LS.g('hist',[]),top=LS.g('top',{}),ups=LS.g('ups',[]),locals=[];
+let meta=LS.g('meta',{}),ids=LS.g('ids',[]),extra=LS.g('extra',[]),fav=LS.g('fav',[]),hist=LS.g('hist',[]),tops=LS.g('top',{}),ups=LS.g('ups',[]),locals=[];
 let tab=LS.g('tab','quick'),sort='recent',rev=false,detail=null,queue=[],qi=-1,cur=null,playing=false,loop='queue',shuf=false,ready=false,yt,ctxs={};
 const TABS=[['quick','Quick picks','✦'],['disc','Discover','◍'],['songs','Songs','♫'],['pls','Playlists','☰'],['art','Artists','●'],['alb','Albums','◉'],['loc','Local','⇥']];
 const lib=()=>[...new Set([...extra,...ids])],tk=id=>meta[id]||{t:'…',a:''},esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -78,15 +78,16 @@ function need(l){l.forEach(id=>{if(!meta[id]&&!todo.includes(id))todo.push(id)})
 function pump(){while(busy<5&&todo.length){const id=todo.shift();busy++;
 fetch('https://www.youtube.com/oembed?format=json&url='+encodeURIComponent('https://www.youtube.com/watch?v='+id)).then(r=>r.json()).then(j=>{meta[id]={t:j.title,a:(j.author_name||'').replace(/ - Topic$/,'')}}).catch(()=>{meta[id]={t:'Brano '+id.slice(0,4),a:''}}).finally(()=>{busy--;save();cancelAnimationFrame(rr);rr=requestAnimationFrame(()=>{render();mini();});pump()})}}
 /* ---- player YouTube IFrame (senza istanze) ---- */
-const API='https://dry-disk-a417.se-02-ba-bro.workers.dev'; /* worker Cloudflare */
-const api=async p=>{const r=await fetch(API+p);if(!r.ok)throw new Error(r.status);return r.json()};
+const WORKER='https://dry-disk-a417.se-02-ba-bro.workers.dev';let API=null; /* auto: stesso dominio se c'è /api, altrimenti il worker */
+const base=async()=>{if(API!==null)return API;try{const r=await fetch('/api/health');const j=await r.json();API=j&&j.ok?'':WORKER}catch{API=WORKER}return API};
+const api=async p=>{const r=await fetch(await base()+p);if(!r.ok)throw new Error(r.status);return r.json()};
 let mode='au';const viaAu=()=>mode==='au'||(cur&&tk(cur).src);
 const au=new Audio();au.onerror=()=>{if(!cur||tk(cur).src||mode!=='au')return;if(!ready)return toast('Streaming non disponibile');toast('Uso il player YouTube');mode='yt';au.pause();yt.loadVideoById(cur)};au.onended=()=>nxt(true);au.onplay=()=>{playing=true;mini();pp()};au.onpause=()=>{playing=false;mini();pp()};
 const s=document.createElement('script');s.src='https://www.youtube.com/iframe_api';document.head.appendChild(s);
 window.onYouTubeIframeAPIReady=()=>{yt=new YT.Player('yt',{width:240,height:135,playerVars:{listType:'playlist',list:AURA,playsinline:1,controls:0,disablekb:1},events:{onReady:()=>{ready=true;let n=0;const t=setInterval(()=>{const l=yt.getPlaylist&&yt.getPlaylist();if(l&&l.length){ids=l;save();need(ids);render();clearInterval(t)}else if(++n>20)clearInterval(t)},500)},
 onStateChange:e=>{if(mode!=='yt')return;if(e.data===0)nxt(true);if(e.data===1||e.data===2){playing=e.data===1;mini();pp()}},onError:()=>{toast('Brano non riproducibile, passo al prossimo');setTimeout(()=>nxt(true),600)}}})};
-function playId(id){cur=id;const m=tk(id);hist=[id,...hist.filter(x=>x!==id)].slice(0,100);top[id]=(top[id]||0)+1;LS.s('hist',hist);LS.s('top',top);
-mode='au';try{yt&&yt.pauseVideo()}catch{}au.src=m.src||API+'/api/stream?id='+id;au.play().catch(()=>{})
+function playId(id){cur=id;const m=tk(id);hist=[id,...hist.filter(x=>x!==id)].slice(0,100);tops[id]=(tops[id]||0)+1;LS.s('hist',hist);LS.s('top',tops);
+mode='au';try{yt&&yt.pauseVideo()}catch{}au.src=m.src||(API===null?WORKER:API)+'/api/stream?id='+id;au.play().catch(()=>{})
 if('mediaSession'in navigator){navigator.mediaSession.metadata=new MediaMetadata({title:m.t,artist:m.a,artwork:[{src:cov(id)}]});}
 mini();pp();render()}
 function start(list,i){queue=list.slice();qi=i;playId(queue[qi])}
@@ -139,7 +140,7 @@ case'mr':if(!ups.length)toast('Crea prima una playlist in Playlists');else{const
 case'find':case'fab':ov('#search',true);$('#si').focus();break;
 case'alpha':sort='alpha';render();break;case'recent':sort='recent';render();break;case'rev':rev=!rev;render();break;
 case'back':detail=null;render();break;
-case'pl':{const k=t.dataset.k;detail={n:{fav:'Favorites',au:'Aura Sound',top:'My top 50',hist:'History'}[k],ids:()=>k==='fav'?fav:k==='au'?ids:k==='hist'?hist:Object.keys(top).sort((x,y)=>top[y]-top[x]).slice(0,50)};render();break}
+case'pl':{const k=t.dataset.k;detail={n:{fav:'Favorites',au:'Aura Sound',top:'My top 50',hist:'History'}[k],ids:()=>k==='fav'?fav:k==='au'?ids:k==='hist'?hist:Object.keys(tops).sort((x,y)=>tops[y]-tops[x]).slice(0,50)};render();break}
 case'up':{const p=ups[+t.dataset.i];detail={n:p.n,ids:()=>p.l};render();break}
 case'newpl':{const n=(prompt('Nome playlist')||'').trim();if(n){ups.push({n,l:[]});LS.s('ups',ups);render()}break}
 case'artist':{const n=t.dataset.n;detail={n,ids:()=>lib().filter(id=>tk(id).a===n)};render();break}
