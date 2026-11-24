@@ -1,598 +1,244 @@
-<!DOCTYPE html>
-<html lang="it">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S. Brotto Holding | L'Eccellenza Globale</title>
-    <style>
-        /* CSS Reset & Base Variables */
-        :root {
-            --bg-pure-white: #ffffff;
-            --bg-off-white: #fbfbfd;
-            --text-dark: #1d1d1f;
-            --text-gray: #515154;
-            --text-light-gray: #86868b;
-            --accent: #0071e3;
-            --font-stack: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        }
+<!doctype html>
+<html lang="it"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Aura">
+<meta name="theme-color" content="#0F1224"><link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="apple-touch-icon.png"><title>Aura</title>
+<style>
+:root{--bg:#0F1224;--bg2:#171B33;--card:#1B1F4A;--line:#2E3563;--sel:#2A3060;--ac:#7C5CFF;--ac2:#00B8FF;--mut:#A3AACB;--tx:#fff;--g:linear-gradient(135deg,#7C5CFF,#00B8FF);--sb:env(safe-area-inset-bottom,0px);--st:env(safe-area-inset-top,0px)}
+[data-theme=light]{--bg:#f4f5fb;--bg2:#fff;--card:#e9ebf7;--line:#d3d7ee;--sel:#dfe3f7;--mut:#5A6190;--tx:#0F1224}
+[data-amoled=on]{--bg:#000;--bg2:#000}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;height:100%;background:var(--bg);color:var(--tx);font:15px -apple-system,"SF Pro Text",system-ui,sans-serif;overscroll-behavior:none}
+button,input{font:inherit;color:inherit}button{background:none;border:0;cursor:pointer}
+#main{position:fixed;inset:0;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:calc(var(--st) + 8px) 14px calc(var(--sb) + 110px)}
+.hd{display:flex;align-items:center;gap:8px;margin-bottom:6px;min-height:44px}.hd b{font-size:24px;font-weight:800;letter-spacing:-.5px}.hd i{flex:1}.lg{width:34px;height:34px;border-radius:9px;background:#fff}
+.tr{display:flex;gap:8px;overflow-x:auto;margin:6px -14px 12px;padding:0 14px;scrollbar-width:none}.tr::-webkit-scrollbar{display:none}
+.tr button{flex:none;padding:8px 16px;border-radius:20px;background:var(--card);color:var(--mut);font-weight:600}.tr button.on{background:var(--g);color:#fff}
+h3{font-size:13px;color:var(--mut);text-transform:uppercase;letter-spacing:.8px;margin:18px 0 6px}.mut{color:var(--mut)}
+#mini{position:fixed;left:8px;right:8px;bottom:calc(8px + var(--sb));background:var(--card);border:1px solid var(--line);border-radius:16px;display:none;align-items:center;gap:10px;padding:8px;z-index:4;overflow:hidden}
+#mini img{width:46px;height:46px;border-radius:10px;object-fit:cover;background:var(--sel)}#mini .t{flex:1;min-width:0}
+.t div{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}#mini .pb{position:absolute;left:0;right:0;bottom:0;height:3px;background:var(--line)}#mini .pb i{display:block;height:100%;width:0;background:var(--g)}
+.ib{font-size:22px;padding:6px 10px}.ib.on{color:var(--ac2)}
+.row{display:flex;align-items:center;gap:12px;padding:8px 6px;border-radius:12px}.row:active,.row.cur{background:var(--sel)}.row img,.row .av{width:52px;height:52px;border-radius:10px;object-fit:cover;background:var(--sel);flex:none}.row .av{display:flex;align-items:center;justify-content:center;font-weight:800;font-size:20px;border-radius:50%;background:var(--g);color:#fff}.row .t{flex:1;min-width:0}.row.cur .n{color:var(--ac2)}
+input.s{width:100%;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:13px 14px;margin:6px 0 10px;outline:0;font-size:16px}input.s:focus{border-color:var(--ac)}
+.bt{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:9px 16px;margin:0 6px 10px 0}.bt.ac{background:var(--g);color:#fff;border:0;font-weight:700}.bt.on{border-color:var(--ac2);color:var(--ac2)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px}.chips button{padding:10px 16px;border-radius:12px;background:var(--card);border:1px solid var(--line);font-weight:600}
+#full{position:fixed;inset:0;background:linear-gradient(#2A3060,var(--bg) 62%);z-index:20;display:none;flex-direction:column;padding:calc(var(--st) + 10px) 24px calc(var(--sb) + 18px)}
+#full.open{display:flex}#full .cv{flex:1;display:flex;align-items:center;justify-content:center;min-height:0}#full .cv img{width:min(100%,360px);aspect-ratio:1;object-fit:cover;border-radius:20px;box-shadow:0 14px 44px #0009;background:var(--sel)}
+#full h2{margin:14px 0 2px;font-size:21px}input[type=range]{width:100%;accent-color:var(--ac2)}.ctl{display:flex;justify-content:space-between;align-items:center;margin-top:6px}.ctl .ib{font-size:26px}.ctl .pl{background:var(--g);color:#fff;width:66px;height:66px;border-radius:50%;font-size:26px}
+.tm{display:flex;justify-content:space-between;font-size:12px;color:var(--mut)}
+#sheet{position:fixed;inset:0;background:#0009;z-index:30;display:none;align-items:flex-end}#sheet.open{display:flex}#sheet div{width:100%;background:var(--bg2);border-radius:20px 20px 0 0;padding:10px 6px calc(var(--sb) + 10px);max-height:75%;overflow:auto}
+#sheet h3{margin:8px 14px;text-transform:none;letter-spacing:0}#sheet button{display:block;width:100%;text-align:left;padding:14px;font-size:16px}
+#toast{position:fixed;left:50%;top:calc(var(--st) + 10px);transform:translateX(-50%);background:var(--g);color:#fff;padding:8px 16px;border-radius:20px;z-index:40;display:none;font-weight:600}
+</style></head><body>
+<audio id="a" playsinline preload="auto" x-webkit-airplay="allow"></audio>
+<div id="main"></div>
+<div id="mini"><img id="mi"><div class="t"><div id="mt" style="font-weight:700"></div><div id="ma" class="mut" style="font-size:13px"></div></div>
+<button class="ib" id="mp">▶</button><button class="ib" id="mn">⏭</button><div class="pb"><i id="mb"></i></div></div>
+<div id="full"><div style="display:flex;justify-content:space-between"><button class="ib" id="fc">⌄</button><button class="ib" id="fm">⋯</button></div><div class="cv"><img id="fi"></div>
+<h2 id="ft"></h2><div id="fa" class="mut"></div>
+<div style="margin-top:14px"><input type="range" id="sk" min="0" max="1" step="0.1" value="0"><div class="tm"><span id="cp">0:00</span><span id="du">0:00</span></div></div>
+<div class="ctl"><button class="ib" id="sh">🔀</button><button class="ib" id="pv">⏮</button><button class="pl" id="fp">▶</button><button class="ib" id="nx">⏭</button><button class="ib" id="rp">🔁</button></div>
+<div class="ctl" style="margin-top:14px"><button class="ib" id="fv">♡</button><input type="range" id="vo" min="0" max="1" step="0.01" value="1" style="width:40%"><button class="ib" id="dl">⬇</button><button class="ib" id="qu">🎵</button></div></div>
+<div id="sheet"><div></div></div><div id="toast"></div>
+<script>
+const $=s=>document.querySelector(s),a=$('#a');
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmt=s=>{s=Math.max(0,s|0);const m=s/60|0,h=m/60|0,z=n=>String(n).padStart(2,'0');return h?`${h}:${z(m%60)}:${z(s%60)}`:`${m}:${z(s%60)}`};
+const LS={g:(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch{return d}},s:(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch{}}};
+const th=(id,q='mq')=>`https://i.ytimg.com/vi/${id}/${q}default.jpg`;
+/* >>> INDIRIZZO FISSO DEL SERVER: incolla qui il tuo https://... (senza / finale). Lascia '' per farlo chiedere all'app. <<< */
+const DEFAULT_BASE='';
+let KEY=localStorage.getItem('aura_key')||'',BASE=localStorage.getItem('aura_base')||DEFAULT_BASE;
+const url=(p,o={})=>{const u=new URL(p,BASE||location.origin);if(KEY)u.searchParams.set('k',KEY);for(const k in o)u.searchParams.set(k,o[k]);return u.toString()};
+function askBase(){const v=prompt('Indirizzo del server Aura (https://…)',BASE);if(!v)return false;BASE=v.trim().replace(/\/+$/,'');localStorage.setItem('aura_base',BASE);return true}
+async function api(p,o){let r;
+  try{r=await fetch(url(p,o))}catch{if(askBase())return api(p,o);throw 0}
+  if(r.status===404&&!BASE&&askBase())return api(p,o);
+  if(r.status===401){const k=prompt('Chiave di accesso (AURA_KEY)');if(k){KEY=k;localStorage.setItem('aura_key',k);return api(p,o)}throw 0}
+  if(!r.ok)throw 0;return r.json()}
+const IOS=/iP(hone|ad|od)/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+let Q=LS.g('q',[]),idx=LS.g('idx',-1),shuffle=LS.g('sh',false),repeat=LS.g('rp',0);
+let favs=LS.g('favs',[]),hist=LS.g('hist',[]),pls=LS.g('pls',{}),plays=LS.g('plays',{}),cfg=LS.g('cfg',{theme:'dark',amoled:false});
+let back=[],view='home',ht='quick',plOpen=null,artOpen=null,results=[],cur={list:[],kind:''},errs=0,resumeAt=0,qp=null,trend=null,sleepAt=0,sleepEnd=false,filt='';
+const saveQ=()=>{LS.s('q',Q);LS.s('idx',idx);LS.s('sh',shuffle);LS.s('rp',repeat)};
+const toast=m=>{const t=$('#toast');t.textContent=m;t.style.display='block';clearTimeout(toast.h);toast.h=setTimeout(()=>t.style.display='none',2200)};
+const isFav=id=>favs.some(t=>t.id===id),T=()=>Q[idx];
+const slim=t=>({id:t.id,title:t.title,artist:t.artist,dur:t.dur});
+const artistOf=t=>(t.artist||'Sconosciuto').replace(/ - Topic$/,'').replace(/VEVO$/i,'').trim()||'Sconosciuto';
+function applyTheme(){const d=document.documentElement,t=cfg.theme==='system'?(matchMedia('(prefers-color-scheme: light)').matches?'light':'dark'):cfg.theme;d.dataset.theme=t;d.dataset.amoled=cfg.amoled&&t==='dark'?'on':'off';
+  const m=document.querySelector('meta[name=theme-color]');if(m)m.content=getComputedStyle(d).getPropertyValue('--bg').trim()||'#0F1224'}
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+/* ---------- PLAYER (un solo <audio> mai ricreato: indispensabile per l'audio in background su iOS) ---------- */
+function load(i,play=true,at=0){
+  const t=Q[i];if(!t)return;idx=i;resumeAt=at;
+  a.src=url('/api/stream/'+t.id);                      // src sincrono: nessun await tra una traccia e l'altra
+  if(play){const p=a.play();p&&p.catch(()=>{})}
+  if(play){hist=[slim(t),...hist.filter(x=>x.id!==t.id)].slice(0,200);LS.s('hist',hist);plays[t.id]=(plays[t.id]||0)+1;LS.s('plays',plays)}
+  meta(t);saveQ();ui();warm();if(view==='queue')render()
+}
+function warm(){const n=Q[idx+1];if(n)fetch(url('/api/warm/'+n.id)).catch(()=>{})}
+function next(auto){
+  const n=Q.length;if(!n)return;
+  if(auto&&repeat===2){a.currentTime=0;a.play();return}
+  let i;
+  if(shuffle&&n>1){back.push(idx);do{i=Math.random()*n|0}while(i===idx)}
+  else if(idx+1<n)i=idx+1;else if(repeat===1)i=0;else{if(auto){a.pause();ui()}return}
+  load(i)
+}
+function prev(){
+  if(a.currentTime>3||!Q.length){a.currentTime=0;return}
+  if(shuffle&&back.length)load(back.pop());else if(idx>0)load(idx-1);else a.currentTime=0
+}
+const toggle=()=>{if(!T())return;a.paused?a.play().catch(()=>{}):a.pause()};
+function stop(){a.pause();a.removeAttribute('src');a.load();idx=-1;saveQ();ui()}
+function playNow(list,i){Q=list.map(slim);back=[];load(i)}
+function enqueue(t,after){t=slim(t);if(!Q.length){Q=[t];load(0);return}if(after)Q.splice(idx+1,0,t);else Q.push(t);saveQ();warm();toast(after?'Riprodotto dopo':'Aggiunto alla coda');if(view==='queue')render()}
+function qRemove(i){
+  const was=!a.paused;Q.splice(i,1);
+  if(i<idx)idx--;else if(i===idx){if(Q.length)load(Math.min(i,Q.length-1),was);else stop()}
+  saveQ();render()}
+function qMove(i,d){const j=i+d;if(j<0||j>=Q.length)return;[Q[i],Q[j]]=[Q[j],Q[i]];if(idx===i)idx=j;else if(idx===j)idx=i;saveQ();warm();render()}
+a.addEventListener('ended',()=>{if(sleepEnd){sleepEnd=false;ui();return}next(true)});
+a.addEventListener('play',()=>{errs=0;ui();if('mediaSession'in navigator)navigator.mediaSession.playbackState='playing'});
+a.addEventListener('pause',()=>{ui();if('mediaSession'in navigator)navigator.mediaSession.playbackState='paused'});
+a.addEventListener('loadedmetadata',()=>{if(resumeAt){a.currentTime=resumeAt;resumeAt=0}$('#sk').max=a.duration||1;$('#du').textContent=fmt(a.duration)});
+a.addEventListener('error',()=>{                         // un tentativo di recupero (URL scaduto), poi salta
+  if(!T())return;const t=a.currentTime;
+  if(errs++<1){load(idx,true,t);return}
+  if(errs<4){toast('Brano non disponibile, salto');next(true)}else{toast('Errore di rete');a.pause()}});
+let lastPos=0;
+a.addEventListener('timeupdate',()=>{
+  const d=a.duration||0,p=a.currentTime;
+  if(sleepAt&&Date.now()>=sleepAt){sleepAt=0;a.pause();toast('Timer terminato')}
+  $('#mb').style.width=d?p/d*100+'%':'0';
+  if(!seeking){$('#sk').value=p;$('#cp').textContent=fmt(p)}
+  if(Date.now()-lastPos>4000){lastPos=Date.now();LS.s('pos',p)}
+  if('mediaSession'in navigator&&d&&isFinite(d)){try{navigator.mediaSession.setPositionState({duration:d,position:Math.min(p,d),playbackRate:a.playbackRate||1})}catch{}}});
 
-        body {
-            font-family: var(--font-stack);
-            background-color: var(--bg-pure-white);
-            color: var(--text-dark);
-            line-height: 1.5;
-            font-weight: 400;
-            letter-spacing: -0.015em;
-            text-align: center; /* Tutto il sito centrato */
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
+/* ---------- MEDIA SESSION (schermata di blocco / Control Center / AirPods) ---------- */
+function meta(t){
+  if(!('mediaSession'in navigator))return;
+  navigator.mediaSession.metadata=new MediaMetadata({title:t.title,artist:t.artist,album:'Aura',
+    artwork:[{src:th(t.id,'mq'),sizes:'320x180',type:'image/jpeg'},{src:th(t.id,'hq'),sizes:'480x360',type:'image/jpeg'}]})}
+if('mediaSession'in navigator){
+  const ms=navigator.mediaSession;
+  // NB: niente seekbackward/seekforward, altrimenti iOS sostituisce i tasti precedente/successivo
+  [['play',()=>a.play()],['pause',()=>a.pause()],['stop',()=>a.pause()],['previoustrack',prev],['nexttrack',()=>next(false)],
+   ['seekto',d=>{a.currentTime=d.seekTime}]].forEach(([k,f])=>{try{ms.setActionHandler(k,f)}catch{}})}
 
-        /* Navigation */
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            height: 54px;
-            background-color: rgba(255, 255, 255, 0.85);
-            backdrop-filter: saturate(180%) blur(20px);
-            -webkit-backdrop-filter: saturate(180%) blur(20px);
-            border-bottom: 1px solid rgba(0,0,0,0.05);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
 
-        .nav-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-            max-width: 1200px;
-            padding: 0 22px;
-        }
+/* ---------- UI ---------- */
+let seeking=false;
+function ui(){
+  const t=T(),pl=!a.paused&&!!t;
+  $('#mini').style.display=t?'flex':'none';
+  for(const id of['mp','fp'])$('#'+id).textContent=pl?'⏸':'▶';
+  if(t){$('#mi').src=th(t.id);$('#mt').textContent=t.title;$('#ma').textContent=artistOf(t);
+    $('#fi').src=th(t.id,'hq');$('#ft').textContent=t.title;$('#fa').textContent=artistOf(t);$('#fv').textContent=isFav(t.id)?'♥':'♡'}
+  $('#sh').classList.toggle('on',shuffle);$('#rp').classList.toggle('on',repeat>0);$('#rp').textContent=repeat===2?'🔂':'🔁'}
+$('#mp').onclick=$('#fp').onclick=toggle;$('#mn').onclick=$('#nx').onclick=()=>next(false);$('#pv').onclick=prev;
+$('#sh').onclick=()=>{shuffle=!shuffle;back=[];saveQ();ui()};
+$('#rp').onclick=()=>{repeat=(repeat+1)%3;saveQ();ui()};
+$('#mini .t').onclick=$('#mi').onclick=()=>$('#full').classList.add('open');$('#fc').onclick=()=>$('#full').classList.remove('open');
+$('#qu').onclick=()=>{$('#full').classList.remove('open');go('queue')};
+$('#fv').onclick=()=>T()&&favToggle(T());
+$('#dl').onclick=()=>T()&&window.open(url('/api/stream/'+T().id,{dl:1}));
+$('#fm').onclick=()=>{const t=T();if(!t)return;sheet(t.title,[['📻 Avvia radio',()=>radio(t)],['⏲ Timer di spegnimento',sleepMenu],['👤 Vai all\'artista',()=>{$('#full').classList.remove('open');artOpen=artistOf(t);view='home';plOpen=null;render()}],['📁 Aggiungi a playlist…',()=>addToPl(t)]])};
+const sk=$('#sk');sk.oninput=()=>{seeking=true;$('#cp').textContent=fmt(sk.value)};sk.onchange=()=>{a.currentTime=+sk.value;seeking=false};
+const vo=$('#vo');if(IOS)vo.style.visibility='hidden';vo.oninput=()=>a.volume=+vo.value;
+function favToggle(t){const i=favs.findIndex(x=>x.id===t.id);if(i>=0)favs.splice(i,1);else favs.unshift(slim(t));LS.s('favs',favs);toast(i>=0?'Rimosso dai preferiti':'Aggiunto ai preferiti');ui();if(plOpen==='#fav'||(view==='home'&&ht==='songs'))render()}
+function sheet(title,items){const s=$('#sheet'),d=s.firstElementChild;d.innerHTML=`<h3>${esc(title)}</h3>`;
+  items.forEach(([l,f])=>{const b=document.createElement('button');b.textContent=l;b.onclick=()=>{s.classList.remove('open');f()};d.append(b)});
+  s.classList.add('open');s.onclick=e=>{if(e.target===s)s.classList.remove('open')}}
+function addToPl(t){const n=Object.keys(pls);
+  const add=x=>{if(!pls[x].some(y=>y.id===t.id))pls[x].push(slim(t));LS.s('pls',pls);toast('Aggiunto a '+x)};
+  sheet('Aggiungi alla playlist',[...n.map(x=>[x,()=>add(x)]),['＋ Nuova playlist…',()=>{const x=(prompt('Nome della playlist')||'').trim();if(x){pls[x]=pls[x]||[];add(x)}}]])}
+async function radio(t){toast('Avvio radio…');try{const l=await api('/api/radio/'+t.id);playNow([t,...l.filter(x=>x.id!==t.id)],0)}catch{toast('Radio non disponibile')}}
+function sleepMenu(){sheet('Timer di spegnimento',[...[15,30,45,60].map(m=>[m+' minuti',()=>sleep(m)]),['Fino a fine brano',()=>sleep('end')],['Disattiva',()=>sleep(0)]])}
+function sleep(m){sleepAt=0;sleepEnd=false;if(m==='end'){sleepEnd=true;toast('Si ferma a fine brano')}else if(m){sleepAt=Date.now()+m*6e4;toast('Timer: '+m+' min')}else toast('Timer disattivato')}
+function menu(i){
+  const t=cur.list[i];if(!t)return;
+  const m=[['▶ Riproduci',()=>cur.kind==='queue'?load(i):playNow(cur.list,i)],['📻 Avvia radio',()=>radio(t)],['⤵ Riproduci dopo',()=>enqueue(t,true)],['➕ Aggiungi alla coda',()=>enqueue(t)],
+    [isFav(t.id)?'♥ Rimuovi dai preferiti':'♡ Aggiungi ai preferiti',()=>favToggle(t)],['📁 Aggiungi alla playlist…',()=>addToPl(t)],['👤 Vai all\'artista',()=>{artOpen=artistOf(t);view='home';plOpen=null;render()}],['⬇ Scarica audio',()=>window.open(url('/api/stream/'+t.id,{dl:1}))]];
+  if(cur.kind==='queue')m.push(['⬆ Sposta su',()=>qMove(i,-1)],['⬇ Sposta giù',()=>qMove(i,1)],['✖ Rimuovi dalla coda',()=>qRemove(i)]);
+  if(cur.kind==='pl')m.push(['✖ Rimuovi dalla playlist',()=>{pls[plOpen].splice(i,1);LS.s('pls',pls);render()}]);
+  sheet(t.title,m)}
+const row=(t,i)=>`<div class="row${cur.kind==='queue'&&i===idx?' cur':''}" data-i="${i}"><img loading="lazy" src="${th(t.id)}"><div class="t"><div class="n">${esc(t.title)}</div><div class="mut" style="font-size:13px">${esc(artistOf(t))}${t.dur?' · '+fmt(t.dur):''}</div></div><button class="ib more" data-m="${i}">⋯</button></div>`;
+const list=(l,k)=>{cur={list:l,kind:k};return l.length?l.map(row).join(''):'<p class="mut">Vuoto.</p>'};
+const uniq=l=>{const s=new Set;return l.filter(t=>!s.has(t.id)&&s.add(t.id))};
+const allSongs=()=>uniq([...favs,...hist,...Object.values(pls).flat(),...Q]);
+const topList=()=>{const m=new Map(allSongs().map(t=>[t.id,t]));return Object.entries(plays).sort((x,y)=>y[1]-x[1]).map(([id])=>m.get(id)).filter(Boolean).slice(0,10)};
+const BI={'#fav':['Preferiti','♥',()=>favs],'#top':['I miei top 10','🏆',topList],'#hist':['Cronologia','🕘',()=>hist]};
+const plSongs=n=>BI[n]?BI[n][2]():(pls[n]||[]),plTitle=n=>BI[n]?BI[n][0]:n;
+const HT=[['quick','Selezione rapida'],['discover','Scopri'],['songs','Brani'],['playlists','Playlist'],['artists','Artisti']];
+const MOODS=['Pop','Rock','Hip hop','Chill','Workout','Focus','Latino','Italiana','Elettronica','Jazz','Classica','Indie'];
+function go(v){view=v;plOpen=null;artOpen=null;render();scrollTo(0,0)}
+function loadQuick(force){if(qp&&!force)return;qp=null;const s=hist[0];
+  api(s?'/api/radio/'+s.id:'/api/search',s?{}:{q:'top hits'}).then(l=>qp=l).catch(()=>qp=[]).finally(()=>{if(view==='home'&&ht==='quick'&&!plOpen&&!artOpen)render()})}
+function loadTrend(){if(trend)return;api('/api/search',{q:'hit del momento'}).then(l=>trend=l).catch(()=>trend=[]).finally(()=>{if(view==='home'&&ht==='discover')render()})}
+function settingsHTML(){const c=cfg;return `<h3>Aspetto</h3>${[['dark','Scuro'],['light','Chiaro'],['system','Sistema']].map(([k,l])=>`<button class="bt${c.theme===k?' on':''}" data-s="theme:${k}">${l}</button>`).join('')}<button class="bt${c.amoled?' on':''}" data-s="amoled">AMOLED</button>
+<h3>Riproduzione</h3><button class="bt" data-s="sleep">⏲ Timer di spegnimento</button>
+<h3>Dati</h3><button class="bt" data-s="export">Esporta libreria</button><button class="bt" data-s="import">Importa libreria</button><button class="bt" data-s="clrhist">Cancella cronologia</button>
+<h3>Server</h3><button class="bt" data-s="base">Indirizzo server</button><button class="bt" data-s="key">Chiave di accesso</button>
+<h3>Info</h3><p class="mut">Aura PWA 1.1 · l'audio è fornito dal tuo server Aura.</p>`}
+function render(){
+  const m=$('#main'),sub=view!=='home'||plOpen||artOpen;
+  const ttl=view==='search'?'Cerca':view==='queue'?'In coda':view==='settings'?'Impostazioni':plOpen?plTitle(plOpen):artOpen?artOpen:'Aura';
+  let h=`<div class="hd">${sub?'<button class="ib" data-g="back">‹</button>':'<img class="lg" src="logo.png">'}<b>${esc(ttl)}</b><i></i>${view==='search'?'':'<button class="ib" data-g="search">🔎</button>'}<button class="ib" data-g="settings">⚙️</button></div>`;
+  if(view==='search')h+=`<input class="s" id="q" type="search" placeholder="Cerca…" enterkeyhint="search" value="${esc(render.q||'')}"><div id="res">${list(results,'s')}</div>`;
+  else if(view==='queue')h+=`<span class="mut">${Q.length} brani</span> <button class="bt" data-a="clear" style="margin-left:8px">Svuota</button><button class="bt" data-a="qpl">Salva come playlist</button>${list(Q,'queue')}`;
+  else if(view==='settings')h+=settingsHTML();
+  else if(plOpen){const u=!BI[plOpen];h+=`<button class="bt ac" data-a="all">▶ Riproduci</button>${u?'<button class="bt" data-a="delpl">Elimina</button>':''}${list(plSongs(plOpen),u?'pl':'p')}`}
+  else if(artOpen)h+=`<button class="bt ac" data-a="all">▶ Riproduci</button>${list(allSongs().filter(t=>artistOf(t)===artOpen),'a')}`;
+  else{
+    h+=`<div class="tr">${HT.map(([k,l])=>`<button data-h="${k}" class="${ht===k?'on':''}">${l}</button>`).join('')}</div>`;
+    if(ht==='quick'){loadQuick();h+=qp===null?'<p class="mut">Caricamento…</p>':`<button class="bt ac" data-a="all">▶ Riproduci</button><button class="bt" data-a="refresh">↻ Aggiorna</button>${list(qp,'q')}`}
+    else if(ht==='discover'){loadTrend();h+=`<h3>Umori e generi</h3><div class="chips">${MOODS.map(x=>`<button data-mood="${x}">${x}</button>`).join('')}</div><h3>Di tendenza</h3>${trend===null?'<p class="mut">Caricamento…</p>':list(trend,'t')}`}
+    else if(ht==='songs'){const l=allSongs().filter(t=>(t.title+t.artist).toLowerCase().includes(filt.toLowerCase()));h+=`<input class="s" id="f" placeholder="Filtra…" value="${esc(filt)}"><div id="fl">${list(l,'sg')}</div>`}
+    else if(ht==='playlists'){h+=`<h3>Playlist integrate</h3>${Object.entries(BI).map(([k,[n,ic,f]])=>`<div class="row" data-p="${k}"><div class="av">${ic}</div><div class="t"><div class="n">${n}</div><div class="mut" style="font-size:13px">${f().length} brani</div></div>›</div>`).join('')}<h3>Le tue playlist</h3><button class="bt ac" data-a="newpl">＋ Nuova playlist</button>${Object.keys(pls).map(n=>`<div class="row" data-p="${esc(n)}"><div class="av">${esc(n[0]||'?').toUpperCase()}</div><div class="t"><div class="n">${esc(n)}</div><div class="mut" style="font-size:13px">${pls[n].length} brani</div></div>›</div>`).join('')}`}
+    else{const g={};allSongs().forEach(t=>(g[artistOf(t)]??=[]).push(t));h+=Object.keys(g).sort().map(n=>`<div class="row" data-ar="${esc(n)}"><div class="av">${esc(n[0]).toUpperCase()}</div><div class="t"><div class="n">${esc(n)}</div><div class="mut" style="font-size:13px">${g[n].length} brani</div></div>›</div>`).join('')||'<p class="mut">Nessun artista: ascolta qualcosa per iniziare.</p>'}
+  }
+  m.innerHTML=h;
+  if(view==='queue'&&idx>=0){const c=m.querySelector('.cur');c&&c.scrollIntoView({block:'center'})}
+  const q=$('#q');if(q){q.onkeydown=e=>{if(e.key==='Enter'){q.blur();doSearch(q.value)}};if(!results.length&&!q.value)q.focus()}
+  const f=$('#f');if(f)f.oninput=()=>{filt=f.value;const l=allSongs().filter(t=>(t.title+t.artist).toLowerCase().includes(filt.toLowerCase()));$('#fl').innerHTML=list(l,'sg')}}
+async function doSearch(q){
+  q=q.trim();if(!q)return;render.q=q;$('#res').innerHTML='<p class="mut">Ricerca…</p>';
+  try{results=await api('/api/search',{q});$('#res').innerHTML=list(results,'s')}
+  catch{$('#res').innerHTML='<p class="mut">Errore di ricerca. Controlla la connessione al server.</p>'}}
+function settingAct(k){
+  if(k.startsWith('theme:')){cfg.theme=k.slice(6)}else if(k==='amoled')cfg.amoled=!cfg.amoled;
+  else if(k==='sleep')return sleepMenu();
+  else if(k==='base'){askBase();return}
+  else if(k==='key'){const v=prompt('Chiave di accesso (AURA_KEY)',KEY);if(v!==null){KEY=v;localStorage.setItem('aura_key',v)}return}
+  else if(k==='clrhist'){if(confirm('Cancellare la cronologia?')){hist=[];plays={};LS.s('hist',hist);LS.s('plays',plays);qp=null}}
+  else if(k==='export'){const j=JSON.stringify({favs,hist,pls,plays});(navigator.share?navigator.share({text:j}):navigator.clipboard.writeText(j)).then(()=>toast('Libreria esportata')).catch(()=>{});return}
+  else if(k==='import'){const j=prompt('Incolla qui la libreria esportata');if(!j)return;try{const d=JSON.parse(j);favs=d.favs||[];hist=d.hist||[];pls=d.pls||{};plays=d.plays||{};LS.s('favs',favs);LS.s('hist',hist);LS.s('pls',pls);LS.s('plays',plays);toast('Libreria importata')}catch{toast('Dati non validi')}}
+  LS.s('cfg',cfg);applyTheme();render()}
+$('#main').onclick=e=>{
+  const mo=e.target.closest('[data-m]');if(mo)return menu(+mo.dataset.m);
+  const g=e.target.closest('[data-g]');if(g){const k=g.dataset.g;if(k==='back'){if(plOpen||artOpen){plOpen=artOpen=null;render()}else go('home')}else go(k);return}
+  const h=e.target.closest('[data-h]');if(h){ht=h.dataset.h;return render()}
+  const s=e.target.closest('[data-s]');if(s)return settingAct(s.dataset.s);
+  const md=e.target.closest('[data-mood]');if(md){render.q=md.dataset.mood+' music';results=[];view='search';render();doSearch(render.q);return}
+  const ac=e.target.closest('[data-a]');
+  if(ac){const k=ac.dataset.a;
+    if(k==='all'&&cur.list.length)playNow(cur.list,0);
+    if(k==='refresh')loadQuick(true),render();
+    if(k==='clear'){const t=T();Q=t?[t]:[];idx=t?0:-1;saveQ();render()}
+    if(k==='qpl'){const n=(prompt('Nome della playlist')||'').trim();if(n){pls[n]=Q.map(slim);LS.s('pls',pls);toast('Playlist salvata')}}
+    if(k==='delpl'&&confirm('Eliminare la playlist?')){delete pls[plOpen];LS.s('pls',pls);plOpen=null;render()}
+    if(k==='newpl'){const n=(prompt('Nome della playlist')||'').trim();if(n){pls[n]=pls[n]||[];LS.s('pls',pls);render()}}
+    return}
+  const p=e.target.closest('[data-p]');if(p){plOpen=p.dataset.p;return render()}
+  const ar=e.target.closest('[data-ar]');if(ar){artOpen=ar.dataset.ar;return render()}
+  const r=e.target.closest('.row[data-i]');if(r){const i=+r.dataset.i;cur.kind==='queue'?load(i):playNow(cur.list,i)}};
 
-        .nav-logo img {
-            height: 24px;
-            width: auto;
-            object-fit: contain;
-            display: block;
-            filter: contrast(1.2);
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 28px;
-        }
-
-        .nav-links a {
-            color: var(--text-dark);
-            text-decoration: none;
-            font-size: 12px;
-            font-weight: 500;
-            letter-spacing: -0.01em;
-            transition: color 0.3s ease;
-            opacity: 0.8;
-        }
-
-        .nav-links a:hover {
-            opacity: 1;
-            color: var(--accent);
-        }
-
-        /* Hero Section */
-        .hero {
-            background-color: var(--bg-pure-white);
-            padding: 200px 20px 140px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            min-height: 90vh;
-        }
-
-        /* Logo al posto dell'H1, grande come un testo Hero */
-        .hero-main-logo {
-            height: 120px;
-            width: auto;
-            object-fit: contain;
-            margin-bottom: 40px;
-        }
-
-        .hero h2 {
-            font-size: 40px;
-            font-weight: 600;
-            letter-spacing: -0.01em;
-            color: var(--text-dark);
-            margin-bottom: 30px;
-            max-width: 900px;
-        }
-
-        .hero p {
-            font-size: 24px;
-            color: var(--text-gray);
-            max-width: 1000px;
-            margin: 0 auto;
-            line-height: 1.4;
-            font-weight: 400;
-        }
-
-        /* Layout Sezioni Alternate */
-        .section {
-            padding: 140px 20px;
-            background-color: var(--bg-pure-white);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        /* Alternanza sottile per dividere il contenuto senza togliere il bianco */
-        .section:nth-child(even) {
-            background-color: var(--bg-off-white);
-            border-top: 1px solid rgba(0,0,0,0.02);
-            border-bottom: 1px solid rgba(0,0,0,0.02);
-        }
-
-        .container {
-            max-width: 1060px;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .icon-container {
-            margin-bottom: 30px;
-        }
-
-        .icon-container svg {
-            width: 72px;
-            height: 72px;
-            stroke: var(--text-dark);
-            stroke-width: 1.2;
-            fill: none;
-        }
-
-        .section-title {
-            font-size: 56px;
-            font-weight: 600;
-            letter-spacing: -0.005em;
-            margin-bottom: 24px;
-            line-height: 1.1;
-            color: var(--text-dark);
-        }
-
-        .section-subtitle {
-            font-size: 28px;
-            font-weight: 500;
-            color: var(--text-gray);
-            margin-bottom: 60px;
-            max-width: 800px;
-        }
-
-        /* Paragrafi massivi e perfettamete centrati */
-        .text-block {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .text-block p {
-            font-size: 21px;
-            color: var(--text-gray);
-            line-height: 1.6;
-            margin-bottom: 32px;
-            max-width: 980px;
-            text-align: center; /* Forza la centratura del testo */
-        }
-
-        .text-block p:last-child {
-            margin-bottom: 0;
-        }
-
-        .text-block strong {
-            font-weight: 600;
-            color: var(--text-dark);
-        }
-
-        /* Headquarters Special Box (sempre bianco/grigio chiaro) */
-        .hq-box {
-            background-color: var(--bg-pure-white);
-            border: 1px solid rgba(0,0,0,0.08);
-            border-radius: 24px;
-            padding: 80px 40px;
-            width: 100%;
-            max-width: 980px;
-            margin-top: 40px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.03);
-        }
-
-        .hq-box h3 {
-            font-size: 40px;
-            margin-bottom: 24px;
-        }
-
-        .hq-box p.address {
-            font-size: 26px;
-            font-weight: 600;
-            margin-bottom: 24px;
-            color: var(--accent);
-        }
-
-        /* Footer */
-        footer {
-            background-color: var(--bg-off-white);
-            color: var(--text-gray);
-            padding: 80px 20px 60px;
-            font-size: 12px;
-            border-top: 1px solid rgba(0,0,0,0.05);
-            line-height: 1.4;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .footer-logo {
-            margin-bottom: 40px;
-        }
-
-        .footer-logo img {
-            height: 40px;
-            opacity: 0.6;
-        }
-
-        .footer-legal-text {
-            max-width: 980px;
-            text-align: center;
-            color: var(--text-light-gray);
-            font-size: 13px;
-            margin-top: 40px;
-            padding-top: 40px;
-            border-top: 1px solid rgba(0,0,0,0.05);
-        }
-
-        .footer-legal-text p {
-            margin-bottom: 16px;
-        }
-
-        @media (max-width: 768px) {
-            .hero-main-logo { height: 80px; }
-            .hero h2 { font-size: 32px; }
-            .section-title { font-size: 40px; }
-            .section-subtitle { font-size: 22px; }
-            .text-block p { font-size: 18px; }
-            .nav-links { display: none; }
-            .section { padding: 100px 20px; }
-        }
-    </style>
-</head>
-<body>
-
-    <!-- Navigazione Principale -->
-    <nav>
-        <div class="nav-content">
-            <a href="#" class="nav-logo">
-                <img src="https://raw.githubusercontent.com/ryzn-eu/Paysend029249_8299Sys898/main/18C8FB52-5C10-4353-816A-8F05575A14DD.png" alt="S. Brotto Holding Logo">
-            </a>
-            <div class="nav-links">
-                <a href="#governance">Governance</a>
-                <a href="#amministrazione">Amministrazione</a>
-                <a href="#ecosistema">Le Controllate</a>
-                <a href="#headquarter">Sede Centrale</a>
-                <a href="#tecnologia">Tecnologia & R&D</a>
-                <a href="#legal">Legal & Compliance</a>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <header class="hero">
-        <!-- Il Logo sostituisce il testo gigante S. Brotto Holding -->
-        <img src="https://raw.githubusercontent.com/ryzn-eu/Paysend029249_8299Sys898/main/18C8FB52-5C10-4353-816A-8F05575A14DD.png" alt="S. Brotto Holding" class="hero-main-logo">
-        
-        <h2>Progettiamo l'orizzonte. Governiamo il futuro.</h2>
-        <p>L'architettura aziendale definitiva per l'esplorazione spaziale, le telecomunicazioni globali a banda ultra-larga e lo sviluppo tecnologico avanzato. Un ecosistema societario sotto la guida del Presidente e Fondatore Sebastian Brotto, progettato per orchestrare il progresso della tecnologico attraverso l'integrazione di ricerca quantistica, infrastrutture neurali e dominio orbitale.</p>
-    </header>
-
-    <!-- 1. Governance e Direzione Strategica -->
-    <section id="governance" class="section">
-        <div class="container">
-            <div class="icon-container">
-                <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-            </div>
-            <h2 class="section-title">Governance Strategica</h2>
-            <h3 class="section-subtitle">Il controllo direzionale al centro del sistema.</h3>
-            
-            <div class="text-block">
-                <p>La S. Brotto Holding non agisce come un semplice aggregatore di capitali, ma costituisce il vertice esecutivo, intellettuale e strategico di tutte le operazioni globali Attraverso l'esercizio rigoroso dell'attività di direzione e coordinamento (ai sensi delle normative internazionali sulle partecipazioni di controllo), il Consiglio di Amministrazione Centrale, presieduto da Sebastian Brotto, plasma le traiettorie di sviluppo a lungo termine di ogni singola entità affiliata. Il nostro modello di governance impone una sincronizzazione perfetta tra le macro-strategie finanziarie e l'esecuzione operativa microscopica, garantendo che nessuna divisione operi in isolamento.</p>
-                <p>Ogni decisione, dalle fusioni e acquisizioni (M&A) fino all'allocazione di capitali nei settori di ricerca e sviluppo aerospaziale, viene filtrata attraverso complessi algoritmi di risk-management proprietari. La Holding centralizza le politiche di investimento, dettando i ritmi dell'innovazione e assicurando che il portafoglio azionario mantenga un livello di resilienza assoluto contro le fluttuazioni macroeconomiche globali. La governance diventa così una scienza esatta, un meccanismo in cui etica d'impresa, massimizzazione del valore per gli azionisti e ambizione visionaria si fondono in un unico, inarrestabile vettore di crescita.</p>
-                <p>Il Board of Directors supervisiona l'allineamento di tutte le controllate (S.B. Global Horizon, S.O.O.H. e Horizon FiberCorp) rispetto al Master Plan  dell'azienda. Non deleghiamo la visione; la imponiamo con autorevolezza, standardizzando i protocolli di leadership, unificando le metriche di performance e garantendo che ogni singolo brevetto, ogni infrastruttura dispiegata e ogni satellite lanciato in orbita risponda esclusivamente alla direttiva primaria: l'eccellenza assoluta e incontrastata sul mercato mondiale.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- 2. Amministrazione Centralizzata -->
-    <section id="amministrazione" class="section">
-        <div class="container">
-            <div class="icon-container">
-                <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-            </div>
-            <h2 class="section-title">Amministrazione e Controllo</h2>
-            <h3 class="section-subtitle">Efficienza sistemica guidata dall'Intelligenza Finanziaria.</h3>
-            
-            <div class="text-block">
-                <p>L'infrastruttura amministrativa della S. Brotto Holding rappresenta l'apice dell'ingegneria gestionale contemporanea. Funzionando come un sistema nervoso centralizzato, il comparto amministrativo solleva le società operative da ogni onere burocratico, legale e contabile. Redigiamo il bilancio consolidato di gruppo applicando i più severi principi contabili internazionali (IFRS/IAS), sottoponendo i nostri flussi finanziari a triplici livelli di revisione (internal auditing, algoritmi di auditing automatizzato e revisione legale esterna da parte delle società "Big Four"). La trasparenza non è per noi un obbligo di legge, ma un asset strategico fondamentale per rassicurare i mercati e i partner istituzionali.</p>
-                <p>La gestione della tesoreria globale (Cash Pooling) è orchestrata da sistemi di intelligenza artificiale che ottimizzano l'allocazione della liquidità in tempo reale su oltre 40 valute fiduciarie e asset digitali. Questo permette alla Holding di annullare i rischi di cambio, minimizzare l'esposizione debitoria incrociata e garantire un flusso di capitale ininterrotto verso i settori ad altissima intensità di capitale, come la costruzione di vettori spaziali pesanti e la posa di cavi sottomarini transoceanici. Il controllo amministrativo si estende anche alla rigorosa gestione del debito corporate, strutturato tramite l'emissione di green bond e strumenti finanziari ibridi progettati su misura dal nostro dipartimento di Corporate Finance.</p>
-                <p>Ogni processo, dalla fatturazione intercompany alla pianificazione fiscale internazionale, è stato completamente automatizzato per eliminare l'attrito umano e le inefficienze. Il risultato è un apparato amministrativo che opera con la precisione di un orologio svizzero e la potenza di calcolo di un supercomputer, capace di scalare istantaneamente per assorbire l'acquisizione di nuove aziende multinazionali senza subire il minimo rallentamento operativo.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- 3. S.B. Global Horizon -->
-    <section id="ecosistema-1" class="section">
-        <div class="container">
-            <div class="icon-container">
-                <svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
-            </div>
-            <h2 class="section-title">S.B. Global Horizon</h2>
-            <h3 class="section-subtitle">Il motore operativo e logistico.</h3>
-            
-            <div class="text-block">
-                <p>S.B. Global Horizon è il braccio armato e il nucleo operativo primario dell'intera architettura societaria. Laddove la Holding definisce la strategia, S.B. Global Horizon la esegue con una precisione spietata. Questa divisione funge da ponte tra la visione astratta e la realtà materiale, gestendo hub logistici intercontinentali, supervisionando la costruzione di nuove infrastrutture e fornendo la forza lavoro manageriale ed esecutiva necessaria a sostenere la crescita delle altre controllate. È l'ingranaggio centrale che permette all'intero ecosistema di muoversi all'unisono.</p>
-                <p>All'interno di S.B. Global Horizon risiedono i laboratori di ricerca applicata e i centri di test sui materiali avanzati, necessari per le imprese aerospaziali e delle telecomunicazioni. Questa divisione gestisce inoltre l'intero patrimonio immobiliare del gruppo, dalle sedi di rappresentanza nelle principali capitali mondiali, fino all'acquisizione di terreni strategici per le basi di lancio e i data center ipogei. Il coordinamento logistico si avvale di flotte di droni cargo autonomi e di sistemi di tracciamento basati su blockchain privata, garantendo che ogni componente critico raggiunga la sua destinazione con zero tolleranza per i ritardi.</p>
-                <p>Oltre alla logistica, S.B. Global Horizon costituisce lo scudo legale e il framework normativo di base per le operazioni quotidiane. È il contraente primario per le forniture, centralizzando il potere d'acquisto del gruppo per ottenere condizioni monopolistiche sui mercati delle materie prime. L'efficienza di S.B. Global Horizon è il motivo per cui l'intera Holding riesce a operare con margini di profitto che sfidano le leggi dell'economia tradizionale, ottimizzando ogni singola risorsa in modo olistico e in tempo reale.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- 4. S.O.O.H. (Organizzazione Spaziale) -->
-    <section id="ecosistema-2" class="section">
-        <div class="container">
-            <div class="icon-container">
-                <svg viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path></svg>
-            </div>
-            <h2 class="section-title">Organizzazione Spaziale S.O.O.H.</h2>
-            <h3 class="section-subtitle">Oltre l'atmosfera. Il dominio dell'infrastruttura orbitale.</h3>
-            
-            <div class="text-block">
-                <p>S.O.O.H. (Organizzazione Spaziale Orion Horizon) rappresenta l'avanguardia assoluta della S. Brotto Holding, la divisione incaricata di estendere il dominio economico e tecnologico del gruppo oltre i confini del pianeta Terra. Non ci limitiamo a lanciare satelliti; progettiamo interi ecosistemi orbitali interconnessi, costellazioni in orbita bassa (LEO) capaci di coprire ogni centimetro quadrato del globo terrestre, fornendo infrastrutture critiche per le comunicazioni quantistiche, il telerilevamento ad altissima risoluzione e il monitoraggio climatico predittivo per governi e agenzie internazionali.</p>
-                <p>L'ingegneria propulsiva di S.O.O.H. sta attivamente sviluppando motori a ioni di nuova generazione e sistemi di propulsione nucleare termica, mirati ad abbattere drasticamente i tempi e i costi dei trasferimenti orbitali e interplanetari. Le nostre strutture di assemblaggio lavorano in ambienti sterili (cleanroom classe ISO 1) assemblando sonde spaziali, lander robotici e moduli per le future stazioni spaziali commerciali. Il nostro impegno va oltre il mero profitto: S.O.O.H. sta implementando programmi attivi per la mitigazione e la rimozione dei detriti spaziali, assumendo un ruolo di leadership etica nella preservazione dell'ambiente orbitale per le future generazioni umane.</p>
-                <p>La visione a lungo termine della divisione Orion Horizon culmina con il Progetto Artemis-Horizon: un piano pluridecennale per lo sviluppo di infrastrutture permanenti sulla superficie lunare, focalizzate sull'estrazione mineraria autonoma (elio-3, terre rare) e sulla creazione di hub di rifornimento per l'esplorazione dello spazio profondo. Attraverso S.O.O.H., la Holding non si adatta al futuro imposto da altri, ma letteralmente lo costruisce pezzo per pezzo nel vuoto cosmico, riaffermando il proprio ruolo di architetto del destino dell'infrastruttura.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- 5. Horizon FiberCorp -->
-    <section id="ecosistema-3" class="section">
-        <div class="container">
-            <div class="icon-container">
-                <svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
-            </div>
-            <h2 class="section-title">Horizon FiberCorp</h2>
-            <h3 class="section-subtitle">Il gestore globale delle telecomunicazioni ultra-veloci.</h3>
-            
-            <div class="text-block">
-                <p>Nata dall'acquisizione e successiva ristrutturazione totale della FiberCorporation (a Telekom Deutschland Division), Horizon FiberCorp è il sistema nervoso della S.B. Global Horizon. Gestiamo, manuteniamo ed espandiamo continuamente una delle più vaste reti di cavi sottomarini in fibra ottica del mondo, collegando i cinque continenti con dorsali dati a banda passante nell'ordine dei petabit al secondo. L'annessione della divisione tedesca ha garantito alla Holding il monopolio de facto sull'infrastruttura di terra dell'Europa Centrale, permettendoci di ricostruire l'intera rete basandoci su architetture fotoniche proprietarie.</p>
-                <p>Mentre i competitor si affannano per implementare il 5G, Horizon FiberCorp sta già conducendo sperimentazioni sul campo delle reti 6G in aree urbane metropolitane selezionate. Questa tecnologia, integrata profondamente con le costellazioni satellitari di S.O.O.H., mira a fornire connettività continua, ubiqua e con latenza strutturalmente vicina allo zero (sotto il millisecondo), abilitando la diffusione di massa di veicoli a guida totalmente autonoma, telechirurgia robotica transcontinentale e metaversi fotorealistici persistenti. La rete non è più un servizio, ma il tessuto stesso su cui si basa l'economia mondiale moderna.</p>
-                <p>Ogni nodo della rete FiberCorp è protetto da protocolli di crittografia post-quantistica, rendendo le nostre linee dati inattaccabili alle minacce informatiche contemporanee e future. Questa sicurezza di grado militare ha reso Horizon FiberCorp il partner esclusivo e insostituibile per ministeri della difesa, istituzioni finanziarie primarie e agenzie di intelligence internazionali. Connettere il mondo è solo il primo passo; possedere, gestire e proteggere le vie di comunicazione del XXI secolo è il vero obiettivo strategico brillantemente raggiunto dalla nostra divisione telecomunicazioni.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- 6. Headquarter Stănești -->
-    <section id="headquarter" class="section">
-        <div class="container">
-            <div class="icon-container">
-                <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-            </div>
-            <h2 class="section-title">Headquarter Operativo</h2>
-            <h3 class="section-subtitle">Il centro di comando globale a Stănești, Giurgiu.</h3>
-            
-            <div class="text-block">
-                <p>Situato in una posizione geostrategica inestimabile, nel cuore dell'Europa orientale, il complesso direzionale e operativo principale della S. Brotto Holding sorge in Strada Principală, 087215 Stănești, nel distretto di Giurgiu, in Romania., Progettata per resistere a catastrofi sismiche, attacchi cibernetici su larga scala e interruzioni della rete elettrica nazionale, grazie a un sistema interno di generazione energetica a tripla ridondanza.</p>
-                <p>All'interno del Campus di Stănești convergono i vertici decisionali dell'intero gruppo. Da questa singola location, il Management Board controlla in tempo reale il dispiegamento delle reti di Horizon FiberCorp in Asia, monitora le traiettorie orbitali dei satelliti S.O.O.H. sul Pacifico e gestisce le transazioni finanziarie globali. Il sito ospita inoltre il server quantistico centrale dell'azienda, raffreddato da sistemi a immersione liquida sotterranei, capace di elaborare i big data provenienti da tutte le società controllate per generare modelli previsionali accurati sull'andamento dei mercati e della supply chain.</p>
-                <p>La scelta di stabilire l'Headquarter a Giurgiu riflette una strategia di espansione pan-europea lungimirante: un punto di snodo cruciale tra i mercati consolidati dell'Ovest e le economie emergenti dell'Est, con accesso privilegiato a corridoi logistici fluviali (Danubio) e terrestri ad alta velocità. Il campus è inoltre circondato da una riserva ecologica, testimoniando l'impegno della Holding nel coniugare il massimo sviluppo tecnologico possibile con l'armonia architettonica e il rispetto rigoroso dell'ambiente circostante. Stănești non è solo un indirizzo legale; è la capitale del nostro impero.</p>
-            </div>
-
-            <div class="hq-box">
-                <h3>S.B. Global Horizon Central Campus</h3>
-                <p class="address">Strada Principală, 087215 Stănești<br>Județul Giurgiu, România</p>
-                <p style="font-size: 18px; color: var(--text-gray); max-width: 700px; margin: 0 auto; line-height: 1.6;">
-                    Il polo di governance esecutiva che amministra un portafoglio globale di divisioni operative. Sicurezza fisica e logica di Livello 5. In questo perimetro vengono prese le decisioni che plasmano lo sviluppo tecnologico del prossimo decennio.
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <!-- 7. Divisione Intelligenza Artificiale (Horizon AI) -->
-    <section class="section">
-        <div class="container">
-            <div class="icon-container">
-                <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 1 10 10c0 5.52-4.48 10-10 10S2 17.52 2 12A10 10 0 0 1 12 2z"></path><path d="M12 6v6l4 2"></path></svg>
-            </div>
-            <h2 class="section-title">Horizon AI (Intelligenza Artificiale)</h2>
-            <h3 class="section-subtitle">Algoritmi neurali per il dominio cognitivo.</h3>
-            
-            <div class="text-block">
-                <p>La divisione Horizon AI rappresenta il cervello computazionale della S. Brotto Holding. Non ci limitiamo a utilizzare modelli di intelligenza artificiale di terze parti; sviluppiamo internamente Reti Neurali Generali (AGI) progettate per ottimizzare ogni aspetto del nostro conglomerato. Dalla simulazione fluida dell'aerodinamica per i razzi S.O.O.H., all'ottimizzazione del routing dei pacchetti dati sulla dorsale FiberCorp, i nostri algoritmi lavorano incessantemente 24 ore su 24 per limare inefficienze invisibili all'occhio umano, generando un vantaggio competitivo incolmabile.</p>
-                <p>I nostri Large Language Models (LLM) proprietari, addestrati su petabyte di dati industriali, legali e finanziari interni, fungono da consiglieri strategici per il Board of Directors. Forniscono analisi predittive in tempo reale su potenziali crisi di mercato, valutano la fattibilità giuridica di acquisizioni internazionali in frazioni di secondo e redigono bozze contrattuali complesse con precisione chirurgica. La governance dell'intero gruppo si sta progressivamente spostando verso un modello "Human-AI Centric", dove la decisione finale spetta all'esecutivo, ma l'intero perimetro delle opzioni è calcolato dalla macchina.</p>
-                <p>Questa divisione opera sotto il più rigoroso segreto industriale, ospitata nei livelli sotterranei del Campus di Stănești. Riteniamo che il possesso di un'intelligenza artificiale di livello superiore sia l'equivalente moderno del monopolio sulle rotte commerciali nei secoli scorsi. Horizon AI garantisce che la nostra Holding non solo si adatti al cambiamento, ma lo anticipi con decenni di anticipo, trasformando il futuro da una variabile sconosciuta a un'equazione già risolta.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- 8. Ricerca & Sviluppo (Quantum R&D) -->
-    <section class="section">
-        <div class="container">
-            <div class="icon-container">
-                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path><path d="M2 12h20"></path></svg>
-            </div>
-            <h2 class="section-title">Ricerca e Sviluppo Quantistico</h2>
-            <h3 class="section-subtitle">Oltre il silicio. Oltre i limiti della fisica classica.</h3>
-            
-            <div class="text-block">
-                <p>Il Dipartimento di R&D della S. Brotto Holding non lavora per migliorare le tecnologie di oggi, ma per inventare le fondamenta dell'economia di domani. Il nostro focus primario è la supremazia quantistica commerciale. Abbiamo investito miliardi di euro nello sviluppo di qubit stabili e resistenti alla decoerenza, creando i primi prototipi di computer quantistici industriali capaci di risolvere complessi problemi di crittografia, simulazione molecolare per la biotecnologia e ottimizzazione logistica globale, in tempi impossibili per i supercomputer tradizionali.</p>
-                <p>La sinergia tra i nostri laboratori quantistici e la divisione FiberCorp sta portando alla realizzazione della prima rete internet quantistica privata su larga scala. Utilizzando il fenomeno dell'entanglement, permettiamo la trasmissione di dati finanziari e militari con una sicurezza assoluta e garantita dalle leggi stesse della meccanica quantistica: qualsiasi tentativo di intercettazione altera immediatamente lo stato dei fotoni, avvisando i nostri sistemi di sicurezza centrali e rendendo impossibile la clonazione del dato.</p>
-                <p>Non ci accontentiamo di depositare brevetti; stiamo definendo i nuovi standard scientifici mondiali. Collaborando con le menti più brillanti provenienti dalle università più prestigiose del globo, il nostro polo di Ricerca Quantistica è il luogo dove la fantascienza diventa un solido e redditizio modello di business, garantendo alla Holding un monopolio tecnologico intellettuale inattaccabile per i prossimi cinquant'anni.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- 9. Finanza e Mercati dei Capitali -->
-    <section class="section">
-        <div class="container">
-            <div class="icon-container">
-                <svg viewBox="0 0 24 24"><path d="M3 3v18h18"></path><path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"></path></svg>
-            </div>
-            <h2 class="section-title">Mercati dei Capitali e Corporate Finance</h2>
-            <h3 class="section-subtitle">La fluidità del capitale come arma strategica.</h3>
-            
-            <div class="text-block">
-                <p>La divisione Corporate Finance della S. Brotto Holding opera su una scala che rivaleggia con le banche d'investimento multinazionali. La nostra indipendenza finanziaria è assoluta: gestiamo direttamente l'emissione di bond corporate nei mercati asiatici, europei e nordamericani, sfruttando un rating creditizio impeccabile garantito dalla solidità del nostro portafoglio e dalla redditività delle divisioni FiberCorp e S.O.O.H. Strutturiamo operazioni di debito estremamente complesse per finanziare acquisizioni ostili, espansioni infrastrutturali o semplicemente per ottimizzare il Weighted Average Cost of Capital (WACC) dell'intero gruppo.</p>
-                <p>Parallelamente, il nostro braccio di Venture Capital interno individua e assorbe sistematicamente startup deep-tech nascenti. Non partecipiamo come semplici investitori passivi: integriamo immediatamente queste piccole eccellenze nel nostro ecosistema formidabile, scalando le loro innovazioni a livello globale in tempi record. Che si tratti di nuovi metamateriali per scudi termici spaziali o di protocolli di compressione dati, la nostra liquidità immensa funge da acceleratore di particelle per l'innovazione del mercato.</p>
-                <p>Gestiamo inoltre le relazioni dirette con i Fondi Sovrani internazionali, stipulando partnership strategiche a lungo termine che garantiscono la fornitura di infrastrutture di telecomunicazione e assetti satellitari interi Stati nazione, in cambio di posizioni di monopolio operativo decennali e condizioni fiscali iper-agevolate, orchestrate magistralmente dai nostri team di Corporate Finance e Legal internazionale.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- 10. Cybersecurity e Difesa Infrastrutturale -->
-    <section class="section">
-        <div class="container">
-            <div class="icon-container">
-                <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-            </div>
-            <h2 class="section-title">Cybersecurity & Difesa Infrastrutturale</h2>
-            <h3 class="section-subtitle">Fortificazione digitale di grado militare (Zero-Trust).</h3>
-            
-            <div class="text-block">
-                <p>In un'epoca in cui le guerre si combattono nel dominio cibernetico molto prima che su quello fisico, la S. Brotto Holding non lascia alcun margine all'incertezza. La nostra divisione di Cybersecurity ha implementato un'architettura "Zero-Trust" totale su tutti i sistemi del gruppo, dal singolo dispositivo mobile di un dirigente in trasferta fino ai server che regolano l'assetto orbitale dei satelliti S.O.O.H. Presumiamo la costante presenza di hostili sulla rete esterna, motivo per cui i nostri dati più critici, come i codici sorgente dei progetti aerospaziali, viaggiano unicamente su intranet chiuse, isolate fisicamente (air-gapped) dalla rete pubblica.</p>
-                <p>Il nostro SOC (Security Operations Center) centrale a Stănești monitora milioni di eventi di rete al secondo. Affidiamo le risposte di primo e secondo livello a sistemi di mitigazione AI in grado di riconoscere e isolare minacce zero-day, ransomware e tentativi di esfiltrazione dati in frazioni di secondo, prima ancora che un operatore umano possa accorgersene. I nostri team di "Red Teaming" attaccano costantemente e selvaggiamente le nostre stesse infrastrutture per scoprire vulnerabilità prima dei cybercriminali o degli attori statali stranieri.</p>
-                <p>Questa ossessione per la sicurezza totale è il motivo per cui enormi conglomerati e governi si affidano a Horizon FiberCorp per il trasporto dei propri dati classificati. Garantiamo contrattualmente non solo la velocità del dato, ma la sua integrità inviolabile, ponendo la Holding come una vera e propria superpotenza neutrale e inespugnabile nel panorama cibernetico mondiale.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- (Sezioni omesse volutamente dal conteggio per brevità in questa risposta testuale simulata, ma ne genererò altre 10 per arrivare alla densità massiva richiesta. Le sezioni continuano con lo stesso stile Apple ultra-esteso) -->
-
-    <!-- 11. Sostenibilità (ESG) -->
-    <section class="section">
-        <div class="container">
-            <div class="icon-container">
-                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"></path></svg>
-            </div>
-            <h2 class="section-title">Sostenibilità ed ESG Globale</h2>
-            <h3 class="section-subtitle">Il nostro patto con il pianeta Terra.</h3>
-            
-            <div class="text-block">
-                <p>La transizione ecologica non è per noi un semplice adeguamento normativo, ma un paradigma ingegneristico da conquistare. S. Brotto Holding ha varato un mastodontico piano di sostenibilità ambientale con un singolo, irremovibile obiettivo: raggiungere l'impronta di carbonio ampiamente negativa entro il 2030 (Carbon Negative, non solo neutral). Tutti i data center di Horizon FiberCorp, responsabili del consumo di enormi quantità di energia per il raffreddamento dei server, sono ora alimentati esclusivamente da parchi eolici offshore di nostra proprietà e impianti geotermici profondi.</p>
-                <p>Nel campo aerospaziale, la divisione S.O.O.H. ha sviluppato propellenti sintetici a zero emissioni tossiche per il primo stadio dei nostri vettori di lancio. Stiamo inoltre pionierizzando la cattura diretta del carbonio (Direct Air Capture) per produrre carburante in orbita, chiudendo definitivamente il ciclo emissivo. Questo massiccio impegno per l'Environmental, Social, and Governance (ESG) ci ha permesso di attrarre centinaia di miliardi dai fondi d'investimento etici globali, dimostrando che l'iper-tecnologia e la supremazia economica possono prosperare in assoluta armonia con gli ecosistemi terrestri fragili.</p>
-                <p>Il nostro impegno sociale si estende alla drastica riduzione del "Digital Divide". Le costellazioni satellitari orbitanti non servono solo a collegare le grandi capitali finanziarie, ma forniscono connettività gratuita o ampiamente sussidiata alle regioni remote e in via di sviluppo dell'Africa e dell'America Latina, fornendo a centinaia di milioni di persone l'accesso immediato all'istruzione globale, alla telemedicina e ai mercati digitali, sollevando intere nazioni verso una nuova era di prosperità sotto il nostro coordinamento tecnologico.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- 12. Legal & Compliance -->
-    <section id="legal" class="section">
-        <div class="container">
-            <div class="icon-container">
-                <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-            </div>
-            <h2 class="section-title">Legal, Compliance e Regolamentazione</h2>
-            <h3 class="section-subtitle">Scudo giuridico totale. Conformità inossidabile.</h3>
-            
-            <div class="text-block">
-                <p>La complessità delle operazioni della S. Brotto Holding richiede un apparato giuridico di spaventosa potenza e raffinatezza. Il nostro Dipartimento Legale Centrale, domiciliato presso la sede di Stănești ma operativo in oltre 90 giurisdizioni in tutto il mondo, gestisce un groviglio inestricabile di normative internazionali. Dalle regolamentazioni ITU (Unione Internazionale delle Telecomunicazioni) per l'allocazione delle frequenze di Horizon FiberCorp, fino al Trattato sullo Spazio Extra-Atmosferico (Outer Space Treaty) che regola le operazioni estrattive della S.O.O.H., i nostri avvocati e negoziatori governativi dettano l'interpretazione del diritto nel XXI secolo.</p>
-                <p>Il nostro Modello di Organizzazione, Gestione e Controllo (MOG) è lo standard aureo per la prevenzione dei reati societari. Implementiamo policy di KYC (Know Your Customer) e AML (Anti-Money Laundering) talmente severe da superare i requisiti previsti dalle stesse banche centrali. Quando la Holding esegue operazioni epocali, come l'acquisizione della divisione Telekom Deutschland, il nostro team antitrust collabora strettamente con la Commissione Europea e gli organi federali internazionali per garantire un passaggio di proprietà chirurgico, prevenendo sul nascere qualsiasi blocco o sanzione per pratiche di monopolio abusivo, pur mantenendo saldamente il nostro dominio incontrastato sul mercato.</p>
-                <p>Il rispetto rigoroso del GDPR (General Data Protection Regulation) e delle varie direttive privacy globali è integrato al livello del codice sorgente (Privacy by Design). Con petabyte di dati degli utenti che transitano ogni secondo sulle nostre dorsali, la privacy non è considerata un obbligo fastidioso, ma un patto sacro stipulato con l'utente finale. Chiunque tenti di compromettere la riservatezza delle informazioni custodite nei server di S.B. Global Horizon si scontra non solo con un muro cibernetico, ma con la piena, inesorabile rappresaglia legale dei nostri uffici legali schierati a livello mondiale.</p>
-                
-                <h4 style="font-size: 24px; font-weight: 600; margin-top: 40px; margin-bottom: 20px;">Disclaimer Societario e Proprietà Intellettuale</h4>
-                <p><strong>Informazioni Costitutive:</strong> S. Brotto Holding S.A., con sede legale e quartier generale presso il Complesso S.B. Global Horizon, Strada Principală, 087215 Stănești, Județul Giurgiu, România. Capitale Sociale interamente versato: € 2.500.000.000,00. Società operante sotto l'assoluta direzione strategica del Presidente Sebastian Brocca.</p>
-                <p>I marchi commerciali registrati "S. Brotto Holding", "S.B. Global Horizon", "Organizzazione Spaziale Orion Horizon (S.O.O.H.)" e "Horizon FiberCorp", inclusi gli interi portafogli brevettuali ereditati dall'Ex Telekom Deutschland Division, sono blindati dalle convenzioni WIPO (World Intellectual Property Organization). Qualsiasi violazione dei diritti d'autore, ingegneria inversa o utilizzo non autorizzato dei nostri asset logici, fisici o d'immagine, sarà perseguita in ogni giurisdizione competente con estremo rigore ed efficienza legale.</p>
-            </div>
-        </div>
-    </section>
-    
-    <!-- 13. Risorse Umane e Talent Acquisition -->
-    <section class="section">
-        <div class="container">
-            <div class="icon-container">
-                <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-            </div>
-            <h2 class="section-title">Horizon Executive Academy (HR)</h2>
-            <h3 class="section-subtitle">Forgiare la leadership. Acquisire menti brillanti.</h3>
-            
-            <div class="text-block">
-                <p>La S. Brotto Holding riconosce che perfino l'infrastruttura tecnologica più avanzata è inerte senza un capitale umano eccezionale a governarla. Il nostro dipartimento HR non assume dipendenti; seleziona e forgia un'élite manageriale e ingegneristica. Attraverso la nostra prestigiosa "Horizon Academy", reclutiamo direttamente i migliori neolaureati dai politecnici e dalle business school più elitarie del pianeta (MIT, Stanford, Oxford, ETH Zurich), inserendoli in programmi di addestramento intensivo e iper-accelerato, garantendo un costante afflusso di menti visionarie pronte a plasmare il futuro del nostro conglomerato.</p>
-                <p>La gestione dei dirigenti apicali (C-Level e VP) per tutte le società controllate avviene centralmente. Promuoviamo una cultura della meritocrazia spietata e dell'innovazione aggressiva. Garantiamo ai nostri migliori ingegneri e manager pacchetti retributivi stellari e stock option della Holding, rendendoli partner diretti dell'azienda. Chi entra a far parte della leadership della S. Brotto Holding non cerca semplicemente un lavoro, ma abbraccia una missione epocale: ridefinire le regole dell'industria globale e della colonizzazione spaziale.</p>
-                <p>Il benessere dei nostri dipendenti è una priorità strategica calcolata: dai campus aziendali provvisti di cliniche biotecnologiche interne, asili bilingue, centri fitness e ristorazione organica, fino alle politiche di lavoro ibrido estremo basate sul raggiungimento spietato degli obiettivi e non sul tracciamento delle ore in ufficio. Un talento sereno, motivato e focalizzato è l'arma più potente a disposizione del nostro gruppo nella scacchiera economica mondiale.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- 14. Relazioni Geopolitiche e Istituzionali -->
-    <section class="section">
-        <div class="container">
-            <div class="icon-container">
-                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
-            </div>
-            <h2 class="section-title">Geopolitica e Affari Governativi</h2>
-            <h3 class="section-subtitle">Il dialogo paritetico con gli Stati Nazione.</h3>
-            
-            <div class="text-block">
-                <p>Date le dimensioni colossali del nostro perimetro operativo, la S. Brotto Holding non opera semplicemente "all'interno" dei mercati, ma si interfaccia costantemente, e da una posizione di forza negoziale e tecnologica, con le sovranità nazionali e le entità sovranazionali (Unione Europea, Nazioni Unite). Il nostro Dipartimento di Relazioni Istituzionali gestisce un imponente e raffinato apparato di lobbying globale, assicurandosi che le normative emergenti su telecomunicazioni (Horizon FiberCorp), intelligenza artificiale e spazio aereo extra-atmosferico (S.O.O.H.) siano formulate in perfetto allineamento con i nostri piani di espansione strategica decennali.</p>
-                <p>Quando forniamo la dorsale in fibra ottica per l'intero sistema bancario di una nazione europea o posizioniamo satelliti LEO a uso duale civile/militare per governi alleati, noi stabiliamo trattati bilaterali che superano i classici contratti B2B o B2G. Agiamo come partner infrastrutturale insostituibile, garantendo la continuità operativa dello Stato in caso di emergenza, ottenendo in cambio concessioni legislative inestimabili e il blocco dell'ingresso ai competitor meno qualificati e meno affidabili.</p>
-                <p>La sede di Stănești riceve regolarmente delegazioni diplomatiche, capi di Stato e ministri dello sviluppo economico da tutto il mondo. La diplomazia aziendale della Holding si basa su un principio ineluttabile: chi controlla l'informazione globale e l'accesso allo spazio esterno, possiede le leve del potere nel ventunesimo secolo. E noi, sotto la direzione implacabile del Presidente Brocca, le stringiamo saldamente.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- 15. La Visione Secolare (2050 e oltre) -->
-    <section class="section">
-        <div class="container">
-            <div class="icon-container">
-                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"></circle><path d="M16.24 7.76a6 6 0 0 1 0 8.49m-8.48-.01a6 6 0 0 1 0-8.49m11.31-2.82a10 10 0 0 1 0 14.14m-14.14 0a10 10 0 0 1 0-14.14"></path></svg>
-            </div>
-            <h2 class="section-title">La Visione Secolare: Oltre il 2050</h2>
-            <h3 class="section-subtitle">La roadmap dell'evoluzione umana.</h3>
-            
-            <div class="text-block">
-                <p>Mentre i nostri concorrenti redigono piani trimestrali per accontentare azionisti ansiosi, il Board della S. Brotto Holding opera seguendo il "Masterplan Secolare": una roadmap strategica che si spinge inesorabilmente oltre l'orizzonte del 2050. Questo documento iper-classificato, approvato e periodicamente aggiornato personalmente dal Presidente Sebastian Brocca, delinea le tappe per la transizione dell'azienda da conglomerato tecnologico terrestre a infrastruttura portante di un'umanità interplanetaria post-scarsità. Il nostro traguardo finale non è dominare il mercato, ma trascenderlo, creando valore su una scala finora inimmaginabile per la scienza economica classica.</p>
-                <p>Prevediamo un futuro in cui le enormi risorse energetiche necessarie per l'infrastruttura dati di Horizon FiberCorp saranno generate interamente da reattori a fusione nucleare compatti, sviluppati dalle nostre stesse divisioni energetiche sperimentali, svincolando definitivamente l'azienda dalla dipendenza dagli idrocarburi e dai fragili equilibri geopolitici dei paesi produttori. La logistica intercontinentale, un tempo dipendente dalle navi cargo, sarà affidata a voli suborbitali ipersonici coordinati da S.O.O.H., capaci di consegnare merci in qualsiasi punto del pianeta in meno di due ore e mezza, in totale silenzio e senza emissioni inquinanti.</p>
-                <p>La vera eredità della S. Brotto Holding sarà la fusione completa e indistinguibile tra il mondo fisico e quello digitale (Meta-Ecosistema), supportata dall'iper-connettività 6G e dalle interfacce neurali dirette (attualmente in fase embrionale nei nostri laboratori biomedici segreti). Il nostro destino è costruire le impalcature invisibili, nello spazio, nel mare e nelle reti logiche, su cui prospererà la prossima fase evolutiva della civiltà umana. L'orizzonte è soltanto la linea di partenza.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <div class="footer-logo">
-            <img src="https://raw.githubusercontent.com/ryzn-eu/Paysend029249_8299Sys898/main/18C8FB52-5C10-4353-816A-8F05575A14DD.png" alt="S. Brotto Holding Logo" style="height: 60px;">
-        </div>
-        
-        <div style="display: flex; gap: 40px; margin-bottom: 60px; flex-wrap: wrap; justify-content: center;">
-            <a href="#" style="color: var(--text-gray); text-decoration: none; font-weight: 500;">Corporate Governance</a>
-            <a href="#" style="color: var(--text-gray); text-decoration: none; font-weight: 500;">Investor Relations</a>
-            <a href="#" style="color: var(--text-gray); text-decoration: none; font-weight: 500;">Responsabilità Sociale</a>
-            <a href="#" style="color: var(--text-gray); text-decoration: none; font-weight: 500;">Ufficio Stampa Centrale</a>
-            <a href="#" style="color: var(--text-gray); text-decoration: none; font-weight: 500;">Opportunità di Carriera</a>
-            <a href="#" style="color: var(--text-gray); text-decoration: none; font-weight: 500;">Etica e Privacy (GDPR)</a>
-        </div>
-
-        <div class="footer-legal-text">
-            <p>Copyright © 2026 S. Brotto Holding S.A. – Tutti i diritti, brevetti e asset proprietari sono strettamente riservati e tutelati a livello globale.</p>
-            <p>S. Brotto Holding S.A. | Headquarter Legale e Operativo: Strada Principală, 087215 Stănești, Județul Giurgiu, România.<br>
-            Capitale Sociale: RON: 2.500.000.000,00 i.v. | Società Holding pura e mista di diritto, soggetta ad attività di direzione e coordinamento dal Board of Directors presieduto dal Fondatore Sebastian Brotto.</p>
-            <p>I nomi "Telekom Deutschland Division" e relativi asset infrastrutturali storici sono stati interamente acquisiti, fusi per incorporazione, ristrutturati radicalmente e operano ora esclusivamente e senza soluzione di continuità sotto l'egida e la direzione della consociata Horizon FiberCorp. Qualsiasi dichiarazione previsionale contenuta in questa piattaforma è fornita esclusivamente a scopo informativo istituzionale e non costituisce un'offerta per l'acquisto di titoli o asset della Holding.</p>
-        </div>
-    </footer>
-
-</body>
-</html>
+/* ---------- avvio ---------- */
+applyTheme();
+if(Q.length&&idx>=0&&Q[idx]){load(idx,false,LS.g('pos',0))}else{Q=[];idx=-1}
+ui();render();
+if('serviceWorker'in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
+</script></body></html>
